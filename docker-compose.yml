@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  app:
+    build: 
+      context: ./.devcontainer
+      dockerfile: Dockerfile
+      args:
+        USER_NAME: ${USER_NAME}
+    volumes:
+      - ./app:/home/${USER_NAME}/workspace/app
+    stdin_open: true
+    tty: true
