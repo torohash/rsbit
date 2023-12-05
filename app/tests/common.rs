@@ -1,4 +1,4 @@
-use rust_bybit::api::BybitApi;
+use rsbit::api::BybitApi;
 use dotenv::dotenv;
 use std::env;
 

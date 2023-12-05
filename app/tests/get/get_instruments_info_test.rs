@@ -1,4 +1,4 @@
-use rust_bybit::api::get::market::get_instruments_info::{
+use rsbit::api::get::market::get_instruments_info::{
     GetInstrumentsInfoParameters,
     InstrumentsInfoResult,
     GetInstrumentsInfoCategory,

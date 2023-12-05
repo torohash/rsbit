@@ -20,7 +20,7 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rust_bybit::api::BybitApi;
+    /// use rsbit::api::BybitApi;
     ///
     /// #[tokio::main]
     /// async fn main() {

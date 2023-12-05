@@ -43,7 +43,7 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rust_bybit::api::{
+    /// use rsbit::api::{
     ///     get::market::get_instruments_info::{
     ///         GetInstrumentsInfoParameters,
     ///         GetInstrumentsInfoCategory
