@@ -5,7 +5,7 @@ use rsbit::api::get::market::get_mark_price_kline::{
 use crate::common::setup_api;
 
 #[tokio::test]
-async fn test_get_mark_price_kline_success() {
+async fn test_get_index_price_kline_success() {
     let api = setup_api();
     let categories = vec![
         (GetMarkPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string()),
@@ -23,11 +23,11 @@ async fn test_get_mark_price_kline_success() {
         match result {
             Ok(result) => {
                 let ret_code = result.ret_code();
-                assert_eq!(ret_code, 0, "Failed to get mark price kline: {}", result.ret_msg());
+                assert_eq!(ret_code, 0, "Failed to get index price kline: {}", result.ret_msg());
     
             },
             Err(err) => {
-                assert!(false, "Failed to get mark price kline: {:?}", err);
+                assert!(false, "Failed to get index price kline: {:?}", err);
             }
         }
     }
@@ -36,7 +36,7 @@ async fn test_get_mark_price_kline_success() {
 }
 
 #[tokio::test]
-async fn test_get_mark_price_kline_fail() {
+async fn test_get_index_price_kline_fail() {
     let api = setup_api();
     let params = GetMarkPriceKlineParameters::new(
         GetMarkPriceKlineCategory::Linear,

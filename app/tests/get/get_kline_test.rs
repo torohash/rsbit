@@ -5,7 +5,7 @@ use rsbit::api::get::market::get_kline::{
 use crate::common::setup_api;
 
 #[tokio::test]
-async fn test_get_instruments_info_success() {
+async fn test_get_kline_success() {
     let api = setup_api();
     let categories = vec![
         (GetKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string()),
@@ -37,7 +37,7 @@ async fn test_get_instruments_info_success() {
 }
 
 #[tokio::test]
-async fn test_get_instruments_info_fail() {
+async fn test_get_kline_fail() {
     let api = setup_api();
     let params = GetKlineParameters::new(
         GetKlineCategory::Linear,
