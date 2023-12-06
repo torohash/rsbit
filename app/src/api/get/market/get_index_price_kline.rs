@@ -146,7 +146,7 @@ impl GetIndexPriceKlineParameters {
 pub struct GetIndexPriceKlineResponse {
     ret_code: i32,
     ret_msg: String,
-    result: GetIndexPriceKlineResult,
+    result: IndexPriceKlineResult,
     ret_ext_info: Value,
     time: u64,
 }
@@ -167,11 +167,11 @@ impl GetIndexPriceKlineResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &GetIndexPriceKlineResult {
+    pub fn result(&self) -> &IndexPriceKlineResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: GetIndexPriceKlineResult) {
+    pub fn set_result(&mut self, result: IndexPriceKlineResult) {
         self.result = result;
     }
 
@@ -194,12 +194,12 @@ impl GetIndexPriceKlineResponse {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetIndexPriceKlineResult {
+pub struct IndexPriceKlineResult {
     symbol: String,
     category: String,
     list: Vec<IndexPriceKline>
 }
-impl GetIndexPriceKlineResult {
+impl IndexPriceKlineResult {
     pub fn symbol(&self) -> &str {
         &self.symbol
     }

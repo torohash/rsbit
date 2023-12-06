@@ -146,7 +146,7 @@ impl GetMarkPriceKlineParameters {
 pub struct GetMarkPriceKlineResponse {
     ret_code: i32,
     ret_msg: String,
-    result: GetMarkPriceKlineResult,
+    result: MarkPriceKlineResult,
     ret_ext_info: Value,
     time: u64,
 }
@@ -167,11 +167,11 @@ impl GetMarkPriceKlineResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &GetMarkPriceKlineResult {
+    pub fn result(&self) -> &MarkPriceKlineResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: GetMarkPriceKlineResult) {
+    pub fn set_result(&mut self, result: MarkPriceKlineResult) {
         self.result = result;
     }
 
@@ -194,12 +194,12 @@ impl GetMarkPriceKlineResponse {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetMarkPriceKlineResult {
+pub struct MarkPriceKlineResult {
     symbol: String,
     category: String,
     list: Vec<MarkPriceKline>
 }
-impl GetMarkPriceKlineResult {
+impl MarkPriceKlineResult {
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
