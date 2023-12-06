@@ -16,13 +16,13 @@ use serde::{
 use serde_json::Value;
 use anyhow::Result;
 
-const PATH: &'static str = "/v5/market/index-price-kline";
+const PATH: &'static str = "/v5/market/premium-index-price-kline";
 
 impl BybitApi {
-    /// Retrieves the market's index price kline.
+    /// Retrieves the market's premium index price kline.
     ///
-    /// This method asynchronously fetches the index price kline for the specified parameters.
-    /// It returns a `Result` containing the `GetIndexPriceKlineResponse` if successful.
+    /// This method asynchronously fetches the premium index price kline for the specified parameters.
+    /// It returns a `Result` containing the `GetPremiumIndexPriceKlineResponse` if successful.
     ///
     /// # Arguments
     ///
@@ -32,20 +32,20 @@ impl BybitApi {
     ///
     /// ```rust
     /// use rsbit::api::{
-    ///     get::market::get_index_price_kline::{
-    ///         GetIndexPriceKlineParameters,
-    ///         GetIndexPriceKlineCategory
+    ///     get::market::get_premium_index_price_kline::{
+    ///         GetPremiumIndexPriceKlineParameters,
+    ///         GetPremiumIndexPriceKlineCategory
     ///     },
     ///     BybitApi,
     /// };
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = BybitApi::new();
-    ///     let params = GetIndexPriceKlineParameters::new(GetIndexPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
-    ///     let response = api.get_index_price_kline(params).await;
+    ///     let params = GetPremiumIndexPriceKlineParameters::new(GetPremiumIndexPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
+    ///     let response = api.get_premium_index_price_kline(params).await;
     ///     match response {
     ///         Ok(info) => {
-    ///             // Handle the index price kline data
+    ///             // Handle the premium index price kline data
     ///         },
     ///         Err(err) => {
     ///             // Handle the error
@@ -53,21 +53,20 @@ impl BybitApi {
     ///     }
     /// }
     /// ```
-    pub async fn get_index_price_kline(&self, params: GetIndexPriceKlineParameters) -> Result<GetIndexPriceKlineResponse> {
+    pub async fn get_premium_index_price_kline(&self, params: GetPremiumIndexPriceKlineParameters) -> Result<GetPremiumIndexPriceKlineResponse> {
         self.get(PATH, Some(params), false).await
     }
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum GetIndexPriceKlineCategory {
+pub enum GetPremiumIndexPriceKlineCategory {
     Linear,
-    Inverse,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct GetIndexPriceKlineParameters {
-    category: GetIndexPriceKlineCategory,
+pub struct GetPremiumIndexPriceKlineParameters {
+    category: GetPremiumIndexPriceKlineCategory,
     symbol: String,
     interval: String,
     start: Option<u64>,
@@ -75,19 +74,19 @@ pub struct GetIndexPriceKlineParameters {
     limit: Option<u32>,
 }
 
-impl GetIndexPriceKlineParameters {
-    /// Creates a new instance of `GetIndexPriceKlineParameters` with the specified parameters.
+impl GetPremiumIndexPriceKlineParameters {
+    /// Creates a new instance of `GetPremiumIndexPriceKlineParameters` with the specified parameters.
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the index price kline.
-    /// * `symbol` - The symbol of the index price kline.
-    /// * `interval` - The interval of the index price kline.
+    /// * `category` - The category of the premium index price kline.
+    /// * `symbol` - The symbol of the premium index price kline.
+    /// * `interval` - The interval of the premium index price kline.
     ///
     /// # Returns
     ///
-    /// A new instance of `GetIndexPriceKlineParameters`.
-    pub fn new(category: GetIndexPriceKlineCategory, symbol: String, interval: String) -> Self {
+    /// A new instance of `GetPremiumIndexPriceKlineParameters`.
+    pub fn new(category: GetPremiumIndexPriceKlineCategory, symbol: String, interval: String) -> Self {
         Self {
             category,
             symbol,
@@ -98,7 +97,7 @@ impl GetIndexPriceKlineParameters {
         }
     }
 
-    /// Sets the start time for the index price kline data.
+    /// Sets the start time for the premium index price kline data.
     ///
     /// # Arguments
     ///
@@ -106,13 +105,13 @@ impl GetIndexPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetIndexPriceKlineParameters instance.
+    /// The modified GetPremiumIndexPriceKlineParameters instance.
     pub fn with_start(mut self, start: u64) -> Self {
         self.start = Some(start);
         self
     }
 
-    /// Sets the end time for the index price kline data.
+    /// Sets the end time for the premium index price kline data.
     ///
     /// # Arguments
     ///
@@ -120,21 +119,21 @@ impl GetIndexPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetIndexPriceKlineParameters instance.
+    /// The modified GetPremiumIndexPriceKlineParameters instance.
     pub fn with_end(mut self, end: u64) -> Self {
         self.end = Some(end);
         self
     }
 
-    /// Sets the limit for the number of index price kline data to retrieve.
+    /// Sets the limit for the number of premium index price kline data to retrieve.
     ///
     /// # Arguments
     ///
-    /// * `limit` - The limit of kline data.
+    /// * `limit` - The limit of premium index price kline data.
     ///
     /// # Returns
     ///
-    /// The modified GetIndexPriceKlineParameters instance.
+    /// The modified GetPremiumIndexPriceKlineParameters instance.
     pub fn with_limit(mut self, limit: u32) -> Self {
         self.limit = Some(limit);
         self
@@ -143,14 +142,14 @@ impl GetIndexPriceKlineParameters {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetIndexPriceKlineResponse {
+pub struct GetPremiumIndexPriceKlineResponse {
     ret_code: i32,
     ret_msg: String,
-    result: GetIndexPriceKlineResult,
+    result: GetPremiumIndexPriceKlineResult,
     ret_ext_info: Value,
     time: u64,
 }
-impl GetIndexPriceKlineResponse {
+impl GetPremiumIndexPriceKlineResponse {
     pub fn ret_code(&self) -> i32 {
         self.ret_code
     }
@@ -167,11 +166,11 @@ impl GetIndexPriceKlineResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &GetIndexPriceKlineResult {
+    pub fn result(&self) -> &GetPremiumIndexPriceKlineResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: GetIndexPriceKlineResult) {
+    pub fn set_result(&mut self, result: GetPremiumIndexPriceKlineResult) {
         self.result = result;
     }
 
@@ -194,12 +193,12 @@ impl GetIndexPriceKlineResponse {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetIndexPriceKlineResult {
+pub struct GetPremiumIndexPriceKlineResult {
     symbol: String,
     category: String,
-    list: Vec<IndexPriceKline>
+    list: Vec<PremiumIndexPriceKline>
 }
-impl GetIndexPriceKlineResult {
+impl GetPremiumIndexPriceKlineResult {
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
@@ -216,17 +215,17 @@ impl GetIndexPriceKlineResult {
         self.category = category;
     }
 
-    pub fn list(&self) -> &Vec<IndexPriceKline> {
+    pub fn list(&self) -> &Vec<PremiumIndexPriceKline> {
         &self.list
     }
 
-    pub fn set_list(&mut self, list: Vec<IndexPriceKline>) {
+    pub fn set_list(&mut self, list: Vec<PremiumIndexPriceKline>) {
         self.list = list;
     }
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct IndexPriceKline {
+pub struct PremiumIndexPriceKline {
     #[serde(rename = "0", deserialize_with = "deserialize_string_to_u64")]
     timestamp: u64,
     #[serde(rename = "1", deserialize_with = "deserialize_f64")]
@@ -238,7 +237,7 @@ pub struct IndexPriceKline {
     #[serde(rename = "4", deserialize_with = "deserialize_f64")]
     close: f64,
 }
-impl IndexPriceKline {
+impl PremiumIndexPriceKline {
     pub fn timestamp(&self) -> u64 {
         self.timestamp
     }

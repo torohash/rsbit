@@ -3,3 +3,4 @@ mod get_bybit_server_time_test;
 mod get_kline_test;
 mod get_mark_price_kline_test;
 mod get_index_price_kline_test;
+mod get_premium_index_price_kline_test;

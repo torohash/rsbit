@@ -98,7 +98,7 @@ impl GetMarkPriceKlineParameters {
         }
     }
 
-    /// Sets the start time for the kline data.
+    /// Sets the start time for the mark price kline data.
     ///
     /// # Arguments
     ///
@@ -112,7 +112,7 @@ impl GetMarkPriceKlineParameters {
         self
     }
 
-    /// Sets the end time for the kline data.
+    /// Sets the end time for the mark price kline data.
     ///
     /// # Arguments
     ///
@@ -126,7 +126,7 @@ impl GetMarkPriceKlineParameters {
         self
     }
 
-    /// Sets the limit for the number of kline data to retrieve.
+    /// Sets the limit for the number of mark price kline data to retrieve.
     ///
     /// # Arguments
     ///
