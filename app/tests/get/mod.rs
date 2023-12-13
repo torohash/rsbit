@@ -6,3 +6,4 @@ mod get_index_price_kline_test;
 mod get_premium_index_price_kline_test;
 mod get_orderbook_test;
 mod get_tickers_test;
+mod get_funding_rate_history_test;

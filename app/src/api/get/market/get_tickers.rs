@@ -89,6 +89,15 @@ pub struct GetTickersParameters {
 }
 
 impl GetTickersParameters {
+    /// Creates a new instance of `GetTickersParameters` with the specified category.
+    ///
+    /// # Arguments
+    ///
+    /// * `category` - The category of the tickers.
+    ///
+    /// # Returns
+    ///
+    /// A new instance of `GetTickersParameters`.
     pub fn new(category: GetTickersCategory) -> Self {
         Self {
             category,
@@ -98,21 +107,47 @@ impl GetTickersParameters {
         }
     }
 
+    /// Sets the symbol for the `GetTickersParameters`.
+    ///
+    /// # Arguments
+    ///
+    /// * `symbol` - The symbol to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `GetTickersParameters` instance.
     pub fn with_symbol(mut self, symbol: String) -> Self {
         self.symbol = Some(symbol);
         self
     }
 
+    /// Sets the base coin for the `GetTickersParameters`.
+    ///
+    /// # Arguments
+    ///
+    /// * `base_coin` - The base coin to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `GetTickersParameters` instance.
     pub fn with_base_coin(mut self, base_coin: String) -> Self {
         self.base_coin = Some(base_coin);
         self
     }
 
+    /// Sets the expiration date for the `GetTickersParameters`.
+    ///
+    /// # Arguments
+    ///
+    /// * `exp_date` - The expiration date to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `GetTickersParameters` instance.
     pub fn with_exp_date(mut self, exp_date: String) -> Self {
         self.exp_date = Some(exp_date);
         self
     }
-
 }
 
 #[derive(Debug, Clone, Deserialize)]
