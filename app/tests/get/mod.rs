@@ -8,3 +8,4 @@ mod get_orderbook_test;
 mod get_tickers_test;
 mod get_funding_rate_history_test;
 mod get_public_recent_trading_history_test;
+mod get_open_interest_test;

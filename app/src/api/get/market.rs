@@ -8,3 +8,4 @@ pub mod get_orderbook;
 pub mod get_tickers;
 pub mod get_funding_rate_history;
 pub mod get_public_recent_trading_history;
+pub mod get_open_interest;
