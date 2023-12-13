@@ -11,3 +11,5 @@ pub mod get_public_recent_trading_history;
 pub mod get_open_interest;
 pub mod get_historical_volatility;
 pub mod get_insurance;
+pub mod get_risk_limit;
+pub mod get_delivery_price;

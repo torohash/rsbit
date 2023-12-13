@@ -11,3 +11,5 @@ mod get_public_recent_trading_history_test;
 mod get_open_interest_test;
 mod get_historical_volatility_test;
 mod get_insurance_test;
+mod get_risk_limit_test;
+mod get_delivery_price_test;
