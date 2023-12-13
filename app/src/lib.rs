@@ -1,6 +1,6 @@
 pub mod api;
 pub mod ws;
 pub mod error;
-mod consts;
+mod constants;
 mod auth;
 mod utils;

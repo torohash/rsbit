@@ -1,7 +1,7 @@
 pub mod get;
 mod request;
 
-use crate::consts::{
+use crate::constants::{
     TESTNET_API_URL,
     MAINNET_API_URL,
     DEFAULT_RECV_WINDOW,

@@ -14,7 +14,7 @@ use crate::{
         BybitApi,
         get::Get,
     },
-    consts::{
+    constants::{
         CATEGORY_INVERSE,
         CATEGORY_OPTION,
         CATEGORY_LINEAR,
