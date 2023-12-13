@@ -5,3 +5,4 @@ pub mod get_mark_price_kline;
 pub mod get_index_price_kline;
 pub mod get_premium_index_price_kline;
 pub mod get_orderbook;
+pub mod get_tickers;

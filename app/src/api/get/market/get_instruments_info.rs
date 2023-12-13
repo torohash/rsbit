@@ -46,7 +46,8 @@ impl BybitApi {
     /// use rsbit::api::{
     ///     get::market::get_instruments_info::{
     ///         GetInstrumentsInfoParameters,
-    ///         GetInstrumentsInfoCategory
+    ///         GetInstrumentsInfoCategory,
+    ///         InstrumentsInfoResult,
     ///     },
     ///     BybitApi,
     /// };
@@ -56,8 +57,11 @@ impl BybitApi {
     ///     let params = GetInstrumentsInfoParameters::new(GetInstrumentsInfoCategory::Linear);
     ///     let response = api.get_instruments_info(params).await;
     ///     match response {
-    ///         Ok(info) => {
-    ///             // Handle the instrument information
+    ///         Ok(result) => {
+    ///             match result.result() {
+    ///                 InstrumentsInfoResult::Linear(info) => {} // Handle linear instrument info,
+    ///                 _ => {} // Handle something else,
+    ///             }
     ///         },
     ///         Err(err) => {
     ///             // Handle the error
