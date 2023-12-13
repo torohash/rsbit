@@ -1,7 +1,7 @@
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
     utils::{
         deserialize_f64,
@@ -16,36 +16,33 @@ use serde::{
 use serde_json::Value;
 use anyhow::Result;
 
-const PATH: &'static str = "/v5/market/premium-index-price-kline";
+const PATH: &'static str = "/v5/market/kline";
 
 impl BybitApi {
-    /// Retrieves the market's premium index price kline.
-    ///
-    /// This method asynchronously fetches the premium index price kline for the specified parameters.
-    /// It returns a `Result` containing the `GetPremiumIndexPriceKlineResponse` if successful.
+    /// Retrieves the kline data from the API.
     ///
     /// # Arguments
     ///
-    /// * `params` - The parameters for fetching the index price kline.
+    /// * `params` - The parameters for the kline request.
     ///
     /// # Examples
     ///
     /// ```rust
     /// use rsbit::api::{
-    ///     get::market::get_premium_index_price_kline::{
-    ///         GetPremiumIndexPriceKlineParameters,
-    ///         GetPremiumIndexPriceKlineCategory
+    ///     v5::get::market::get_kline::{
+    ///         GetKlineParameters,
+    ///         GetKlineCategory
     ///     },
     ///     BybitApi,
     /// };
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = BybitApi::new();
-    ///     let params = GetPremiumIndexPriceKlineParameters::new(GetPremiumIndexPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
-    ///     let response = api.get_premium_index_price_kline(params).await;
+    ///     let params = GetKlineParameters::new(GetKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
+    ///     let response = api.get_kline(params).await;
     ///     match response {
     ///         Ok(info) => {
-    ///             // Handle the premium index price kline data
+    ///             // Handle the kline data
     ///         },
     ///         Err(err) => {
     ///             // Handle the error
@@ -53,20 +50,22 @@ impl BybitApi {
     ///     }
     /// }
     /// ```
-    pub async fn get_premium_index_price_kline(&self, params: GetPremiumIndexPriceKlineParameters) -> Result<GetPremiumIndexPriceKlineResponse> {
+    pub async fn get_kline(&self, params: GetKlineParameters) -> Result<GetKlineResponse> {
         self.get(PATH, Some(params), false).await
     }
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum GetPremiumIndexPriceKlineCategory {
+pub enum GetKlineCategory {
     Linear,
+    Spot,
+    Inverse,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct GetPremiumIndexPriceKlineParameters {
-    category: GetPremiumIndexPriceKlineCategory,
+pub struct GetKlineParameters {
+    category: GetKlineCategory,
     symbol: String,
     interval: String,
     start: Option<u64>,
@@ -74,19 +73,19 @@ pub struct GetPremiumIndexPriceKlineParameters {
     limit: Option<u32>,
 }
 
-impl GetPremiumIndexPriceKlineParameters {
-    /// Creates a new instance of `GetPremiumIndexPriceKlineParameters` with the specified parameters.
+impl GetKlineParameters {
+    /// Creates a new instance of GetKlineParameters.
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the premium index price kline.
-    /// * `symbol` - The symbol of the premium index price kline.
-    /// * `interval` - The interval of the premium index price kline.
+    /// * `category` - The category of the kline data.
+    /// * `symbol` - The symbol of the trading pair.
+    /// * `interval` - The interval of the kline data.
     ///
     /// # Returns
     ///
-    /// A new instance of `GetPremiumIndexPriceKlineParameters`.
-    pub fn new(category: GetPremiumIndexPriceKlineCategory, symbol: String, interval: String) -> Self {
+    /// A new instance of GetKlineParameters.
+    pub fn new(category: GetKlineCategory, symbol: String, interval: String) -> Self {
         Self {
             category,
             symbol,
@@ -97,7 +96,7 @@ impl GetPremiumIndexPriceKlineParameters {
         }
     }
 
-    /// Sets the start time for the premium index price kline data.
+    /// Sets the start time for the kline data.
     ///
     /// # Arguments
     ///
@@ -105,13 +104,13 @@ impl GetPremiumIndexPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetPremiumIndexPriceKlineParameters instance.
+    /// The modified GetKlineParameters instance.
     pub fn with_start(mut self, start: u64) -> Self {
         self.start = Some(start);
         self
     }
 
-    /// Sets the end time for the premium index price kline data.
+    /// Sets the end time for the kline data.
     ///
     /// # Arguments
     ///
@@ -119,21 +118,21 @@ impl GetPremiumIndexPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetPremiumIndexPriceKlineParameters instance.
+    /// The modified GetKlineParameters instance.
     pub fn with_end(mut self, end: u64) -> Self {
         self.end = Some(end);
         self
     }
 
-    /// Sets the limit for the number of premium index price kline data to retrieve.
+    /// Sets the limit for the number of kline data to retrieve.
     ///
     /// # Arguments
     ///
-    /// * `limit` - The limit of premium index price kline data.
+    /// * `limit` - The limit of kline data.
     ///
     /// # Returns
     ///
-    /// The modified GetPremiumIndexPriceKlineParameters instance.
+    /// The modified GetKlineParameters instance.
     pub fn with_limit(mut self, limit: u32) -> Self {
         self.limit = Some(limit);
         self
@@ -142,14 +141,14 @@ impl GetPremiumIndexPriceKlineParameters {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetPremiumIndexPriceKlineResponse {
+pub struct GetKlineResponse {
     ret_code: i32,
     ret_msg: String,
-    result: PremiumIndexPriceKlineResult,
+    result: KlineResult,
     ret_ext_info: Value,
     time: u64,
 }
-impl GetPremiumIndexPriceKlineResponse {
+impl GetKlineResponse {
     pub fn ret_code(&self) -> i32 {
         self.ret_code
     }
@@ -166,11 +165,11 @@ impl GetPremiumIndexPriceKlineResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &PremiumIndexPriceKlineResult {
+    pub fn result(&self) -> &KlineResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: PremiumIndexPriceKlineResult) {
+    pub fn set_result(&mut self, result: KlineResult) {
         self.result = result;
     }
 
@@ -193,12 +192,12 @@ impl GetPremiumIndexPriceKlineResponse {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PremiumIndexPriceKlineResult {
+pub struct KlineResult {
     symbol: String,
     category: String,
-    list: Vec<PremiumIndexPriceKline>
+    list: Vec<Kline>
 }
-impl PremiumIndexPriceKlineResult {
+impl KlineResult {
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
@@ -215,17 +214,17 @@ impl PremiumIndexPriceKlineResult {
         self.category = category;
     }
 
-    pub fn list(&self) -> &Vec<PremiumIndexPriceKline> {
+    pub fn list(&self) -> &Vec<Kline> {
         &self.list
     }
 
-    pub fn set_list(&mut self, list: Vec<PremiumIndexPriceKline>) {
+    pub fn set_list(&mut self, list: Vec<Kline>) {
         self.list = list;
     }
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct PremiumIndexPriceKline {
+pub struct Kline {
     #[serde(rename = "0", deserialize_with = "deserialize_string_to_u64")]
     timestamp: u64,
     #[serde(rename = "1", deserialize_with = "deserialize_f64")]
@@ -236,8 +235,12 @@ pub struct PremiumIndexPriceKline {
     low: f64,
     #[serde(rename = "4", deserialize_with = "deserialize_f64")]
     close: f64,
+    #[serde(rename = "5", deserialize_with = "deserialize_f64")]
+    volume: f64,
+    #[serde(rename = "6", deserialize_with = "deserialize_f64")]
+    turnover: f64,
 }
-impl PremiumIndexPriceKline {
+impl Kline {
     pub fn timestamp(&self) -> u64 {
         self.timestamp
     }
@@ -276,5 +279,21 @@ impl PremiumIndexPriceKline {
 
     pub fn set_close(&mut self, close: f64) {
         self.close = close;
+    }
+
+    pub fn volume(&self) -> f64 {
+        self.volume
+    }
+
+    pub fn set_volume(&mut self, volume: f64) {
+        self.volume = volume;
+    }
+
+    pub fn turnover(&self) -> f64 {
+        self.turnover
+    }
+
+    pub fn set_turnover(&mut self, turnover: f64) {
+        self.turnover = turnover;
     }
 }

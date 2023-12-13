@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_orderbook::{
+use rsbit::api::v5::get::market::get_orderbook::{
     GetOrderbookParameters,
     GetOrderbookCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_orderbook_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetOrderbookCategory::Linear, "BTCUSDT".to_string()),
         (GetOrderbookCategory::Inverse, "BTCUSD".to_string()),
@@ -38,7 +38,7 @@ async fn test_get_orderbook_success() {
 
 #[tokio::test]
 async fn test_get_orderbook_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetOrderbookParameters::new(
         GetOrderbookCategory::Linear,
         "XXXXXXX".to_string(),

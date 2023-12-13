@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_public_recent_trading_history::{
+use rsbit::api::v5::get::market::get_public_recent_trading_history::{
     GetPublicRecentTradingHistoryParameters,
     GetPublicRecentTradingHistoryCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_public_recent_trading_history_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetPublicRecentTradingHistoryCategory::Linear, "BTCUSDT".to_string()),
         (GetPublicRecentTradingHistoryCategory::Inverse, "BTCUSD".to_string()),
@@ -37,7 +37,7 @@ async fn test_get_public_recent_trading_history_success() {
 
 #[tokio::test]
 async fn test_get_public_recent_trading_history_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetPublicRecentTradingHistoryParameters::new(
         GetPublicRecentTradingHistoryCategory::Linear,
     ).with_symbol("XXXXXXX".to_string());

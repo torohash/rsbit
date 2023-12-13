@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_historical_volatility::{
+use rsbit::api::v5::get::market::get_historical_volatility::{
     GetHistoricalVolatilityParameters,
     GetHistoricalVolatilityCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_historical_volatility_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetHistoricalVolatilityCategory::Option, "BTC".to_string()),
     ];

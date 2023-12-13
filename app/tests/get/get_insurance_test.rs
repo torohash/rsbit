@@ -1,9 +1,9 @@
-use rsbit::api::get::market::get_insurance::GetInsuranceParameters;
-use crate::common::setup_api;
+use rsbit::api::v5::get::market::get_insurance::GetInsuranceParameters;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_insurance_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let coins = vec![
          "BTC".to_string(),
     ];
@@ -28,7 +28,7 @@ async fn test_get_insurance_success() {
 
 #[tokio::test]
 async fn test_get_insurance_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetInsuranceParameters::new().with_coin("XXXXXXX".to_string());
 
     let result = api.get_insurance(params).await;

@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_kline::{
+use rsbit::api::v5::get::market::get_kline::{
     GetKlineParameters,
     GetKlineCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_kline_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string()),
         (GetKlineCategory::Inverse, "BTCUSD".to_string(), "360".to_string()),
@@ -38,7 +38,7 @@ async fn test_get_kline_success() {
 
 #[tokio::test]
 async fn test_get_kline_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetKlineParameters::new(
         GetKlineCategory::Linear,
         "XXXXXXX".to_string(),

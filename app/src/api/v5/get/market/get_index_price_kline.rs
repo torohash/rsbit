@@ -1,7 +1,7 @@
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
     utils::{
         deserialize_f64,
@@ -16,36 +16,36 @@ use serde::{
 use serde_json::Value;
 use anyhow::Result;
 
-const PATH: &'static str = "/v5/market/mark-price-kline";
+const PATH: &'static str = "/v5/market/index-price-kline";
 
 impl BybitApi {
-    /// Retrieves the market's mark price kline.
+    /// Retrieves the market's index price kline.
     ///
-    /// This method asynchronously fetches the mark price kline for the specified parameters.
-    /// It returns a `Result` containing the `GetMarkPriceKlineResponse` if successful.
+    /// This method asynchronously fetches the index price kline for the specified parameters.
+    /// It returns a `Result` containing the `GetIndexPriceKlineResponse` if successful.
     ///
     /// # Arguments
     ///
-    /// * `params` - The parameters for fetching the mark price kline.
+    /// * `params` - The parameters for fetching the index price kline.
     ///
     /// # Examples
     ///
     /// ```rust
     /// use rsbit::api::{
-    ///     get::market::get_mark_price_kline::{
-    ///         GetMarkPriceKlineParameters,
-    ///         GetMarkPriceKlineCategory
+    ///     v5::get::market::get_index_price_kline::{
+    ///         GetIndexPriceKlineParameters,
+    ///         GetIndexPriceKlineCategory
     ///     },
     ///     BybitApi,
     /// };
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = BybitApi::new();
-    ///     let params = GetMarkPriceKlineParameters::new(GetMarkPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
-    ///     let response = api.get_mark_price_kline(params).await;
+    ///     let params = GetIndexPriceKlineParameters::new(GetIndexPriceKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string());
+    ///     let response = api.get_index_price_kline(params).await;
     ///     match response {
     ///         Ok(info) => {
-    ///             // Handle the mark price kline data
+    ///             // Handle the index price kline data
     ///         },
     ///         Err(err) => {
     ///             // Handle the error
@@ -53,21 +53,21 @@ impl BybitApi {
     ///     }
     /// }
     /// ```
-    pub async fn get_mark_price_kline(&self, params: GetMarkPriceKlineParameters) -> Result<GetMarkPriceKlineResponse> {
+    pub async fn get_index_price_kline(&self, params: GetIndexPriceKlineParameters) -> Result<GetIndexPriceKlineResponse> {
         self.get(PATH, Some(params), false).await
     }
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum GetMarkPriceKlineCategory {
+pub enum GetIndexPriceKlineCategory {
     Linear,
     Inverse,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct GetMarkPriceKlineParameters {
-    category: GetMarkPriceKlineCategory,
+pub struct GetIndexPriceKlineParameters {
+    category: GetIndexPriceKlineCategory,
     symbol: String,
     interval: String,
     start: Option<u64>,
@@ -75,19 +75,19 @@ pub struct GetMarkPriceKlineParameters {
     limit: Option<u32>,
 }
 
-impl GetMarkPriceKlineParameters {
-    /// Creates a new instance of `GetMarkPriceKlineParameters` with the specified parameters.
+impl GetIndexPriceKlineParameters {
+    /// Creates a new instance of `GetIndexPriceKlineParameters` with the specified parameters.
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the mark price kline.
-    /// * `symbol` - The symbol of the mark price kline.
-    /// * `interval` - The interval of the mark price kline.
+    /// * `category` - The category of the index price kline.
+    /// * `symbol` - The symbol of the index price kline.
+    /// * `interval` - The interval of the index price kline.
     ///
     /// # Returns
     ///
-    /// A new instance of `GetMarkPriceKlineParameters`.
-    pub fn new(category: GetMarkPriceKlineCategory, symbol: String, interval: String) -> Self {
+    /// A new instance of `GetIndexPriceKlineParameters`.
+    pub fn new(category: GetIndexPriceKlineCategory, symbol: String, interval: String) -> Self {
         Self {
             category,
             symbol,
@@ -98,7 +98,7 @@ impl GetMarkPriceKlineParameters {
         }
     }
 
-    /// Sets the start time for the mark price kline data.
+    /// Sets the start time for the index price kline data.
     ///
     /// # Arguments
     ///
@@ -106,13 +106,13 @@ impl GetMarkPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetMarkPriceKlineParameters instance.
+    /// The modified GetIndexPriceKlineParameters instance.
     pub fn with_start(mut self, start: u64) -> Self {
         self.start = Some(start);
         self
     }
 
-    /// Sets the end time for the mark price kline data.
+    /// Sets the end time for the index price kline data.
     ///
     /// # Arguments
     ///
@@ -120,13 +120,13 @@ impl GetMarkPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetMarkPriceKlineParameters instance.
+    /// The modified GetIndexPriceKlineParameters instance.
     pub fn with_end(mut self, end: u64) -> Self {
         self.end = Some(end);
         self
     }
 
-    /// Sets the limit for the number of mark price kline data to retrieve.
+    /// Sets the limit for the number of index price kline data to retrieve.
     ///
     /// # Arguments
     ///
@@ -134,7 +134,7 @@ impl GetMarkPriceKlineParameters {
     ///
     /// # Returns
     ///
-    /// The modified GetMarkPriceKlineParameters instance.
+    /// The modified GetIndexPriceKlineParameters instance.
     pub fn with_limit(mut self, limit: u32) -> Self {
         self.limit = Some(limit);
         self
@@ -143,14 +143,14 @@ impl GetMarkPriceKlineParameters {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GetMarkPriceKlineResponse {
+pub struct GetIndexPriceKlineResponse {
     ret_code: i32,
     ret_msg: String,
-    result: MarkPriceKlineResult,
+    result: IndexPriceKlineResult,
     ret_ext_info: Value,
     time: u64,
 }
-impl GetMarkPriceKlineResponse {
+impl GetIndexPriceKlineResponse {
     pub fn ret_code(&self) -> i32 {
         self.ret_code
     }
@@ -167,11 +167,11 @@ impl GetMarkPriceKlineResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &MarkPriceKlineResult {
+    pub fn result(&self) -> &IndexPriceKlineResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: MarkPriceKlineResult) {
+    pub fn set_result(&mut self, result: IndexPriceKlineResult) {
         self.result = result;
     }
 
@@ -194,12 +194,12 @@ impl GetMarkPriceKlineResponse {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct MarkPriceKlineResult {
+pub struct IndexPriceKlineResult {
     symbol: String,
     category: String,
-    list: Vec<MarkPriceKline>
+    list: Vec<IndexPriceKline>
 }
-impl MarkPriceKlineResult {
+impl IndexPriceKlineResult {
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
@@ -216,17 +216,17 @@ impl MarkPriceKlineResult {
         self.category = category;
     }
 
-    pub fn list(&self) -> &Vec<MarkPriceKline> {
+    pub fn list(&self) -> &Vec<IndexPriceKline> {
         &self.list
     }
 
-    pub fn set_list(&mut self, list: Vec<MarkPriceKline>) {
+    pub fn set_list(&mut self, list: Vec<IndexPriceKline>) {
         self.list = list;
     }
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct MarkPriceKline {
+pub struct IndexPriceKline {
     #[serde(rename = "0", deserialize_with = "deserialize_string_to_u64")]
     timestamp: u64,
     #[serde(rename = "1", deserialize_with = "deserialize_f64")]
@@ -238,7 +238,7 @@ pub struct MarkPriceKline {
     #[serde(rename = "4", deserialize_with = "deserialize_f64")]
     close: f64,
 }
-impl MarkPriceKline {
+impl IndexPriceKline {
     pub fn timestamp(&self) -> u64 {
         self.timestamp
     }

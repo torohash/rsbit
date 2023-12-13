@@ -1,8 +1,8 @@
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_bybit_server_time_success() {
-    let api = setup_api();
+    let api = setup_api_public();
 
     let result = api.get_bybit_server_time().await;
     match result {

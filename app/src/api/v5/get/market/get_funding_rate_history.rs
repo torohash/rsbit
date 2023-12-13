@@ -1,7 +1,7 @@
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
     utils::{
         deserialize_f64,
@@ -29,7 +29,7 @@ impl BybitApi {
     ///
     /// ```rust
     /// use rsbit::api::{
-    ///     get::market::get_funding_rate_history::{
+    ///     v5::get::market::get_funding_rate_history::{
     ///         GetFundingRateHistoryParameters,
     ///         GetFundingRateHistoryCategory
     ///     },

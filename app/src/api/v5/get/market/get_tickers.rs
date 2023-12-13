@@ -12,7 +12,7 @@ use self::{
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
     constants::{
         CATEGORY_INVERSE,
@@ -41,7 +41,7 @@ impl BybitApi {
     ///
     /// ```rust
     /// use rsbit::api::{
-    ///     get::market::get_tickers::{
+    ///     v5::get::market::get_tickers::{
     ///         GetTickersParameters,
     ///         GetTickersCategory,
     ///         TickersResult,

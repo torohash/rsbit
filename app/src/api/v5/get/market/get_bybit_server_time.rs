@@ -1,7 +1,7 @@
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
     utils::deserialize_string_to_u64,
 };

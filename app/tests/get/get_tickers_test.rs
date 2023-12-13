@@ -1,13 +1,13 @@
-use rsbit::api::get::market::get_tickers::{
+use rsbit::api::v5::get::market::get_tickers::{
     GetTickersParameters,
     TickersResult,
     GetTickersCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_tickers_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetTickersCategory::Linear, "BTCUSDT".to_string()),
         (GetTickersCategory::Inverse, "BTCUSD".to_string()),
@@ -45,7 +45,7 @@ async fn test_get_tickers_success() {
 
 #[tokio::test]
 async fn test_get_tickers_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetTickersParameters::new(
         GetTickersCategory::Linear,
     ).with_symbol("XXXXXXX".to_string());

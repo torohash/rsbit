@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_open_interest::{
+use rsbit::api::v5::get::market::get_open_interest::{
     GetOpenInterestParameters,
     GetOpenInterestCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_open_interest_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetOpenInterestCategory::Linear, "BTCUSDT".to_string(), "5min".to_string()),
         (GetOpenInterestCategory::Inverse, "BTCUSD".to_string(), "5min".to_string()),
@@ -37,7 +37,7 @@ async fn test_get_open_interest_success() {
 
 #[tokio::test]
 async fn test_get_open_interest_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetOpenInterestParameters::new(
         GetOpenInterestCategory::Linear,
         "XXXXXXX".to_string(),

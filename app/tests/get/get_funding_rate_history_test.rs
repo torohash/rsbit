@@ -1,12 +1,12 @@
-use rsbit::api::get::market::get_funding_rate_history::{
+use rsbit::api::v5::get::market::get_funding_rate_history::{
     GetFundingRateHistoryParameters,
     GetFundingRateHistoryCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_funding_rate_history_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetFundingRateHistoryCategory::Linear, "BTCUSDT".to_string()),
         (GetFundingRateHistoryCategory::Inverse, "BTCUSD".to_string()),
@@ -36,7 +36,7 @@ async fn test_get_funding_rate_history_success() {
 
 #[tokio::test]
 async fn test_get_funding_rate_history_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetFundingRateHistoryParameters::new(
         GetFundingRateHistoryCategory::Linear,
         "XXXXXXX".to_string(),
