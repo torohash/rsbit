@@ -15,6 +15,7 @@ use url::{
     Url,
     ParseError,
 };
+use chrono::Utc;
 
 
 pub trait BybitApiRequest: Auth {
@@ -25,7 +26,7 @@ pub trait BybitApiRequest: Auth {
 
 impl BybitApiRequest for BybitApi {
     fn build_headers(&self, payload: &str) -> Result<HeaderMap> {
-        let timestamp = chrono::Utc::now().timestamp_millis().to_string();
+        let timestamp = Utc::now().timestamp_millis().to_string();
         let recv_window = self.recv_window();
         let api_key = &self.require_api_key()?;
         
