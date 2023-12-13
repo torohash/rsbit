@@ -21,3 +21,6 @@ It is recommended that the thread specify 1. because the request frequency will 
 ```
 cargo test -- --test-threads=1
 ```
+
+# Reference
+- [Introduction | Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/intro)
