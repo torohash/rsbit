@@ -13,3 +13,4 @@ pub mod get_historical_volatility;
 pub mod get_insurance;
 pub mod get_risk_limit;
 pub mod get_delivery_price;
+pub mod get_long_short_ratio;

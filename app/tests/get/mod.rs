@@ -13,3 +13,4 @@ mod get_historical_volatility_test;
 mod get_insurance_test;
 mod get_risk_limit_test;
 mod get_delivery_price_test;
+mod get_long_short_ratio_test;
