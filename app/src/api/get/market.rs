@@ -7,3 +7,4 @@ pub mod get_premium_index_price_kline;
 pub mod get_orderbook;
 pub mod get_tickers;
 pub mod get_funding_rate_history;
+pub mod get_public_recent_trading_history;
