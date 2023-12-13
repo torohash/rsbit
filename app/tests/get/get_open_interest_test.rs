@@ -23,11 +23,11 @@ async fn test_get_open_interest_success() {
         match result {
             Ok(result) => {
                 let ret_code = result.ret_code();
-                assert_eq!(ret_code, 0, "Failed to get tickers info: {}", result.ret_msg());
+                assert_eq!(ret_code, 0, "Failed to get open interest: {}", result.ret_msg());
                 assert_eq!(result.result().symbol(), &symbol);
             },
             Err(err) => {
-                assert!(false, "Failed to get tickers info: {:?}", err);
+                assert!(false, "Failed to get open interest: {:?}", err);
             }
         }
     }
