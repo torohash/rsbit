@@ -19,7 +19,8 @@ TESTNET_API_SECRET=your_api_secret
 After that, execute the following command:
 It is recommended that the thread specify 1. because the request frequency will be too high.
 ```
-cargo test -- --test-threads=1
+cargo test --all-targets -- --test-threads=1
+cargo test --doc
 ```
 
 # Reference
