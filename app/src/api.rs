@@ -1,7 +1,7 @@
-pub mod get;
+pub mod v5;
 mod request;
 
-use crate::consts::{
+use crate::constants::{
     TESTNET_API_URL,
     MAINNET_API_URL,
     DEFAULT_RECV_WINDOW,
@@ -62,24 +62,6 @@ impl BybitApi {
         }
     }
 
-    /// Sets the base URL for the API.
-    ///
-    /// # Arguments
-    ///
-    /// * `is_testnet` - A boolean indicating whether the API should use the testnet or mainnet URL.
-    ///
-    /// # Returns
-    ///
-    /// The modified `Self` object.
-    pub fn with_base_url(mut self, is_testnet: bool) -> Self {
-        self.base_url = if is_testnet {
-            TESTNET_API_URL
-        } else {
-            MAINNET_API_URL
-        };
-        self
-    }
-
     /// Sets the API key.
     ///
     /// # Arguments
@@ -119,6 +101,26 @@ impl BybitApi {
     /// The modified `Self` object.
     pub fn with_recv_window(mut self, recv_window: String) -> Self {
         self.recv_window = recv_window;
+        self
+    }
+
+    /// Sets the base URL to the testnet API URL.
+    ///
+    /// # Returns
+    ///
+    /// The modified `Self` object.
+    pub fn with_testnet(mut self) -> Self {
+        self.base_url = TESTNET_API_URL;
+        self
+    }
+
+    /// Sets the base URL to the mainnet API URL.
+    ///
+    /// # Returns
+    ///
+    /// The modified `Self` object.
+    pub fn with_mainnet(mut self) -> Self {
+        self.base_url = MAINNET_API_URL;
         self
     }
 }

@@ -1,13 +1,13 @@
-use rust_bybit::api::get::market::get_instruments_info::{
+use rsbit::api::v5::get::market::get_instruments_info::{
     GetInstrumentsInfoParameters,
     InstrumentsInfoResult,
     GetInstrumentsInfoCategory,
 };
-use crate::common::setup_api;
+use crate::common::setup_api_public;
 
 #[tokio::test]
 async fn test_get_instruments_info_success() {
-    let api = setup_api();
+    let api = setup_api_public();
     let categories = vec![
         (GetInstrumentsInfoCategory::Linear, "BTCUSDT".to_string()),
         (GetInstrumentsInfoCategory::Inverse, "BTCUSD".to_string()),
@@ -45,7 +45,7 @@ async fn test_get_instruments_info_success() {
 
 #[tokio::test]
 async fn test_get_instruments_info_fail() {
-    let api = setup_api();
+    let api = setup_api_public();
     let params = GetInstrumentsInfoParameters::new(
         GetInstrumentsInfoCategory::Linear,
     ).with_symbol("XXXXXXX".to_string());

@@ -12,9 +12,9 @@ use self::{
 use crate::{
     api::{
         BybitApi,
-        get::Get,
+        v5::get::Get,
     },
-    consts::{
+    constants::{
         CATEGORY_INVERSE,
         CATEGORY_OPTION,
         CATEGORY_LINEAR,
@@ -43,10 +43,11 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rust_bybit::api::{
-    ///     get::market::get_instruments_info::{
+    /// use rsbit::api::{
+    ///     v5::get::market::get_instruments_info::{
     ///         GetInstrumentsInfoParameters,
-    ///         GetInstrumentsInfoCategory
+    ///         GetInstrumentsInfoCategory,
+    ///         InstrumentsInfoResult,
     ///     },
     ///     BybitApi,
     /// };
@@ -56,8 +57,11 @@ impl BybitApi {
     ///     let params = GetInstrumentsInfoParameters::new(GetInstrumentsInfoCategory::Linear);
     ///     let response = api.get_instruments_info(params).await;
     ///     match response {
-    ///         Ok(info) => {
-    ///             // Handle the instrument information
+    ///         Ok(result) => {
+    ///             match result.result() {
+    ///                 InstrumentsInfoResult::Linear(info) => {} // Handle linear instrument info,
+    ///                 _ => {} // Handle something else,
+    ///             }
     ///         },
     ///         Err(err) => {
     ///             // Handle the error

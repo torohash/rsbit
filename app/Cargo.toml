@@ -2,6 +2,9 @@
 name = "rsbit"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/torohash/rsbit"
+keywords = ["bybit", "api", "wrapper"]
+description = "This is a library for the Bybit API."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
