@@ -7,9 +7,9 @@ This is a library for the Bybit API.
 The response is returned in the form of a deserialized struct.
 
 ```rust
-use rsbit::api::{
+use rsbit::v5::api::{
     BybitApi,
-    v5::get::market::get_public_recent_trading_history::{
+    get::market::get_public_recent_trading_history::{
         GetPublicRecentTradingHistoryParameters,
         GetPublicRecentTradingHistoryCategory,
     }
