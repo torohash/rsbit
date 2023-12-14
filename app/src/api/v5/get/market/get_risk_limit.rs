@@ -60,6 +60,7 @@ pub enum GetRiskLimitCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetRiskLimitParameters {
     category: GetRiskLimitCategory,
     symbol: Option<String>,

@@ -66,6 +66,7 @@ pub enum GetIndexPriceKlineCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetIndexPriceKlineParameters {
     category: GetIndexPriceKlineCategory,
     symbol: String,

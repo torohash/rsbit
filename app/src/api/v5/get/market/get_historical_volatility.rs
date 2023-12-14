@@ -69,6 +69,7 @@ pub enum GetHistoricalVolatilityCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetHistoricalVolatilityParameters {
     category: GetHistoricalVolatilityCategory,
     base_coin: Option<String>,

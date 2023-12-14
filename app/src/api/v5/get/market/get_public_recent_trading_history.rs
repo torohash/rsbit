@@ -65,6 +65,7 @@ pub enum GetPublicRecentTradingHistoryCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetPublicRecentTradingHistoryParameters {
     category: GetPublicRecentTradingHistoryCategory,
     symbol: Option<String>,

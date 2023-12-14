@@ -63,6 +63,7 @@ pub enum GetOpenInterestCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetOpenInterestParameters {
     category: GetOpenInterestCategory,
     symbol: String,

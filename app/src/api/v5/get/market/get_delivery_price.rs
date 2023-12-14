@@ -62,6 +62,7 @@ pub enum GetDeliveryPriceCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetDeliveryPriceParameters {
     category: GetDeliveryPriceCategory,
     symbol: Option<String>,

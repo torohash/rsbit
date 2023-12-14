@@ -81,6 +81,7 @@ pub enum GetTickersCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetTickersParameters {
     category: GetTickersCategory,
     symbol: Option<String>,

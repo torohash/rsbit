@@ -27,6 +27,22 @@ async fn test_get_historical_volatility_success() {
             }
         }
     }
+}
 
+#[tokio::test]
+async fn test_get_historical_volatility_fail() {
+    let api = setup_api_public();
+    let params = GetHistoricalVolatilityParameters::new(
+        GetHistoricalVolatilityCategory::Option,
+    ).with_base_coin("XXXXXXX".to_string());
 
+    let result = api.get_historical_volatility(params).await;
+    match result {
+        Ok(result) => {
+            assert!(false, "Request should not have succeeded: {:?}", result);
+        },
+        Err(_) => {
+            assert!(true);
+        }
+    }
 }

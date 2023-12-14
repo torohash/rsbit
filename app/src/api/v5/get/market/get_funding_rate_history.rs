@@ -63,6 +63,7 @@ pub enum GetFundingRateHistoryCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetFundingRateHistoryParameters {
     category: GetFundingRateHistoryCategory,
     symbol: String,

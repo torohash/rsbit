@@ -63,6 +63,7 @@ pub enum GetLongShortRatioCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetLongShortRatioParameters {
     category: GetLongShortRatioCategory,
     symbol: String,

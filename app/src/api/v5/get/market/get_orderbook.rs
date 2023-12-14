@@ -65,6 +65,7 @@ pub enum GetOrderbookCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetOrderbookParameters {
     category: GetOrderbookCategory,
     symbol: String,

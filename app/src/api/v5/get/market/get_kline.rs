@@ -64,6 +64,7 @@ pub enum GetKlineCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetKlineParameters {
     category: GetKlineCategory,
     symbol: String,

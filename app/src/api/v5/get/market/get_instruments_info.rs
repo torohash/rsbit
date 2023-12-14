@@ -84,6 +84,7 @@ pub enum GetInstrumentsInfoCategory {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GetInstrumentsInfoParameters {
     category: GetInstrumentsInfoCategory,
     symbol: Option<String>,
