@@ -1,7 +1,13 @@
 use rsbit::v5::api::{
-    get::market::get_tickers::{
-        GetTickersParameters,
-        GetTickersCategory,
+    get::{
+        market::get_tickers::{
+            GetTickersParameters,
+            GetTickersCategory,
+        },
+        trade::get_open_orders::{
+            GetOpenOrdersParameters,
+            GetOpenOrdersCategory,
+        }
     },
     post::trade::{
         place_order::{
@@ -69,6 +75,21 @@ async fn test_order_success() {
                     assert!(false, "Failed to amend order: {:?}", err);
                 }
             }
+
+            let params = GetOpenOrdersParameters::new(
+                GetOpenOrdersCategory::Linear,
+            ).with_symbol(target_symbol.clone());
+            let result = api.get_open_orders(params).await;
+            match result {
+                Ok(result) => {
+                    let ret_code = result.ret_code();
+                    assert_eq!(ret_code, 0, "Failed to get open orders: {}", result.ret_msg());
+                },
+                Err(err) => {
+                    assert!(false, "Failed to get open orders: {:?}", err);
+                }
+            }
+
 
             let params = CancelOrderParameters::new(
                 CancelOrderCategory::Linear,
