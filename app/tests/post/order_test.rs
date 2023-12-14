@@ -52,6 +52,7 @@ async fn test_order_success() {
     ).with_price(target_price);
     
     let result = api.place_order(params).await;
+    
     match result {
         Ok(result) => {
             let ret_code = result.ret_code();
