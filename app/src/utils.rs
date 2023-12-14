@@ -1,6 +1,7 @@
 use serde::{
     Deserialize,
     Deserializer,
+    Serializer,
     de::{self, Visitor},
 };
 
@@ -72,4 +73,23 @@ where
 {
     let s = String::deserialize(deserializer)?;
     s.parse::<u64>().map_err(serde::de::Error::custom)
+}
+
+pub fn serialize_as_string<T, S>(value: &T, serializer: S) -> Result<S::Ok, S::Error>
+where
+    T: ToString,
+    S: Serializer,
+{
+    serializer.serialize_str(&value.to_string())
+}
+
+pub fn serialize_option_as_string<T, S>(option: &Option<T>, serializer: S) -> Result<S::Ok, S::Error>
+where
+    T: ToString,
+    S: Serializer,
+{
+    match option {
+        Some(value) => serializer.serialize_str(&value.to_string()),
+        None => serializer.serialize_none(),
+    }
 }
