@@ -39,7 +39,7 @@ impl BybitApi {
     ///             AmendOrderParameters,
     ///             AmendOrderCategory
     ///         },
-    ///     }
+    ///     },
     ///     BybitApi,
     /// };
     /// #[tokio::main]
@@ -53,20 +53,23 @@ impl BybitApi {
     ///         0.01,
     ///     ).with_price(30000.0);
     ///     let response = api.place_order(params).await;
-    ///     let order_id = response.unwrap().result().order_id();
-    ///     
-    ///     let params = AmendOrderParameters::new(
-    ///         AmendOrderCategory::Linear,
-    ///        "BTCUSDT".to_string(),
-    ///     ).with_order_id(order_id.to_string());
-    ///     let response = api.amend_order(params).await;
     ///     match response {
     ///         Ok(info) => {
-    ///             // Handle the data
-    ///         },
-    ///         Err(err) => {
-    ///             // Handle the error
-    ///         }
+    ///         let params = AmendOrderParameters::new(
+    ///             AmendOrderCategory::Linear,
+    ///             "BTCUSDT".to_string(),
+    ///         ).with_order_id(info.result().order_id().to_string());
+    ///         let response = api.amend_order(params).await;
+    ///             match response {
+    ///                 Ok(info) => {
+    ///                     // Handle the data
+    ///                 },
+    ///                 Err(err) => {
+    ///                     // Handle the error
+    ///                 }
+    ///             }
+    ///         }  
+    ///         Err(err) => {}
     ///     }
     /// }
     /// ```

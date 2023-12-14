@@ -12,6 +12,10 @@ use rsbit::v5::api::{
             AmendOrderParameters,
             AmendOrderCategory,
         },
+        cancel_order::{
+            CancelOrderParameters,
+            CancelOrderCategory,
+        }
     }
 };
 use crate::common::setup_api_private;
@@ -65,6 +69,23 @@ async fn test_order_success() {
                     assert!(false, "Failed to amend order: {:?}", err);
                 }
             }
+
+            let params = CancelOrderParameters::new(
+                CancelOrderCategory::Linear,
+                target_symbol.clone(),
+            ).with_order_id(
+                order_id.to_string()
+            );
+            let result = api.cancel_order(params).await;
+            match result {
+                Ok(result) => {
+                    let ret_code = result.ret_code();
+                    assert_eq!(ret_code, 0, "Failed to cancel order: {}", result.ret_msg());
+                },
+                Err(err) => {
+                    assert!(false, "Failed to cancel order: {:?}", err);
+                }
+            }
         },
         Err(err) => {
             assert!(false, "Failed to place order: {:?}", err);
@@ -102,6 +123,23 @@ async fn test_order_fail() {
     ).with_qty(0.02);
 
     let result = api.amend_order(params).await;
+    match result {
+        Ok(result) => {
+            assert!(false, "Request should not have succeeded: {:?}", result);
+        },
+        Err(_) => {
+            assert!(true);
+        }
+    }
+
+    let params = CancelOrderParameters::new(
+        CancelOrderCategory::Linear,
+        "XXXXXXX".to_string(),
+    ).with_order_id(
+        "1234567890".to_string()
+    );
+
+    let result = api.cancel_order(params).await;
     match result {
         Ok(result) => {
             assert!(false, "Request should not have succeeded: {:?}", result);
