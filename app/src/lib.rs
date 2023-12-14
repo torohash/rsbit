@@ -1,5 +1,4 @@
-pub mod api;
-pub mod ws;
+pub mod v5;
 pub mod error;
 mod constants;
 mod auth;

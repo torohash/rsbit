@@ -1,4 +1,5 @@
-pub mod v5;
+pub mod get;
+pub mod post;
 mod request;
 
 use crate::constants::{

@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_historical_volatility::{
+use rsbit::v5::api::get::market::get_historical_volatility::{
     GetHistoricalVolatilityParameters,
     GetHistoricalVolatilityCategory,
 };

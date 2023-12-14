@@ -1,7 +1,7 @@
 use crate::{
-    api::{
+    v5::api::{
         BybitApi,
-        v5::get::Get,
+        get::Get,
     },
     utils::{
         deserialize_f64,
@@ -35,8 +35,8 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rsbit::api::{
-    ///     v5::get::market::get_historical_volatility::{
+    /// use rsbit::v5::api::{
+    ///     get::market::get_historical_volatility::{
     ///         GetHistoricalVolatilityParameters,
     ///         GetHistoricalVolatilityCategory
     ///     },

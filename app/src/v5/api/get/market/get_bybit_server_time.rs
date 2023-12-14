@@ -1,7 +1,7 @@
 use crate::{
-    api::{
+    v5::api::{
         BybitApi,
-        v5::get::Get,
+        get::Get,
     },
     utils::deserialize_string_to_u64,
 };
@@ -20,7 +20,7 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rsbit::api::BybitApi;
+    /// use rsbit::v5::api::BybitApi;
     ///
     /// #[tokio::main]
     /// async fn main() {

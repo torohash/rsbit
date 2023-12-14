@@ -1,4 +1,4 @@
-use rsbit::api::BybitApi;
+use rsbit::v5::api::BybitApi;
 use dotenv::dotenv;
 use std::env;
 

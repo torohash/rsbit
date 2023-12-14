@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_insurance::GetInsuranceParameters;
+use rsbit::v5::api::get::market::get_insurance::GetInsuranceParameters;
 use crate::common::setup_api_public;
 
 #[tokio::test]

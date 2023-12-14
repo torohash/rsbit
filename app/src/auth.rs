@@ -3,7 +3,7 @@ use crate::{
         self,
         NotFoundApiSecret,
     },
-    api::BybitApi,
+    v5::api::BybitApi,
 };
 
 use ring::hmac::{

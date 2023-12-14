@@ -4,7 +4,7 @@ use crate::{
         NotFoundApiKey
     },
     auth::Auth,
-    api::BybitApi,
+    v5::api::BybitApi,
 };
 use anyhow::Result;
 use reqwest::header::{

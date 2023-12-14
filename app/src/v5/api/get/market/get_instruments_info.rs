@@ -10,9 +10,9 @@ use self::{
     option::OptionInstrumentsInfoResult,
 };
 use crate::{
-    api::{
+    v5::api::{
         BybitApi,
-        v5::get::Get,
+        get::Get,
     },
     constants::{
         CATEGORY_INVERSE,
@@ -43,8 +43,8 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rsbit::api::{
-    ///     v5::get::market::get_instruments_info::{
+    /// use rsbit::v5::api::{
+    ///     get::market::get_instruments_info::{
     ///         GetInstrumentsInfoParameters,
     ///         GetInstrumentsInfoCategory,
     ///         InstrumentsInfoResult,

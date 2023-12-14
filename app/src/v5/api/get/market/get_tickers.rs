@@ -10,9 +10,9 @@ use self::{
     option::OptionTickersResult,
 };
 use crate::{
-    api::{
+    v5::api::{
         BybitApi,
-        v5::get::Get,
+        get::Get,
     },
     constants::{
         CATEGORY_INVERSE,
@@ -40,8 +40,8 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rsbit::api::{
-    ///     v5::get::market::get_tickers::{
+    /// use rsbit::v5::api::{
+    ///     get::market::get_tickers::{
     ///         GetTickersParameters,
     ///         GetTickersCategory,
     ///         TickersResult,

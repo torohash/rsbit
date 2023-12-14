@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_funding_rate_history::{
+use rsbit::v5::api::get::market::get_funding_rate_history::{
     GetFundingRateHistoryParameters,
     GetFundingRateHistoryCategory,
 };

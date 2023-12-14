@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_risk_limit::{
+use rsbit::v5::api::get::market::get_risk_limit::{
     GetRiskLimitParameters,
     GetRiskLimitCategory,
 };

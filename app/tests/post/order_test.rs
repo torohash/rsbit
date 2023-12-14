@@ -1,4 +1,4 @@
-use rsbit::api::v5::post::trade::place_order::{
+use rsbit::v5::api::post::trade::place_order::{
     PlaceOrderParameters,
     PlaceOrderCategory,
 };

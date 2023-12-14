@@ -1,7 +1,7 @@
 use crate::{
-    api::{
+    v5::api::{
         BybitApi,
-        v5::post::Post,
+        post::Post,
     },
     utils::{
         serialize_as_string,
@@ -28,8 +28,8 @@ impl BybitApi {
     /// # Examples
     ///
     /// ```rust
-    /// use rsbit::api::{
-    ///     v5::post::trade::place_order::{
+    /// use rsbit::v5::api::{
+    ///     post::trade::place_order::{
     ///         PlaceOrderParameters,
     ///         PlaceOrderCategory
     ///     },
