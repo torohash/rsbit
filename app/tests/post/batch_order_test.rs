@@ -127,6 +127,42 @@ async fn test_batch_order_fail() {
         }
     }
 
+    let params = BatchAmendOrderParameters::new(
+        BatchAmendOrderCategory::Linear,
+        vec![
+            BatchAmendOrderRequestParameters::new("XXXXXXX".to_string()).with_order_id("1234567890".to_string()),
+            BatchAmendOrderRequestParameters::new("XXXXXXX".to_string()).with_order_id("1234567890".to_string()),
+            BatchAmendOrderRequestParameters::new("XXXXXXX".to_string()).with_order_id("1234567890".to_string()),
+        ],
+    );
+    let result = api.batch_amend_order(params).await;
+    match result {
+        Ok(result) => {
+            // Error of batch amend order is output to ret_ext_info
+            if let Some(list) = result.ret_ext_info().get("list").and_then(|list| list.as_array()) {
+                if let Some(item) = list.get(0) {
+                    let code = item.get("code").and_then(|code| code.as_i64());
+                    let msg = item.get("msg").and_then(|msg| msg.as_str());
+                    if code.is_some() && msg.is_some() {
+                        match code {
+                            Some(code) => {
+                                if code == 0 {
+                                    assert!(false, "Request should not have succeeded: {:?}", msg.unwrap());
+                                }
+                            },
+                            None => {
+                                assert!(true);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        Err(_) => {
+            assert!(true);
+        }
+    }
+
     let params = CancelAllOrderParameters::new(
         CancelAllOrderCategory::Linear,
     );

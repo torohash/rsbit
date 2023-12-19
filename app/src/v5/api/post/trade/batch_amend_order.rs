@@ -13,7 +13,7 @@ use serde::{
 use serde_json::Value;
 use anyhow::Result;
 
-const PATH: &'static str = "/v5/order/create-batch";
+const PATH: &'static str = "/v5/order/amend-batch";
 
 impl BybitApi {
     /// batch amend orders.
