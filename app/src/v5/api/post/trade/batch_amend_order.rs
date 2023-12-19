@@ -127,6 +127,16 @@ pub struct BatchAmendOrderRequestParameters {
 }
 
 impl BatchAmendOrderRequestParameters {
+    /// Creates a new instance of `BatchAmendOrderParameters`.
+    ///
+    /// # Arguments
+    ///
+    /// * `category` - The category of the amend order.
+    /// * `request` - The request of the amend order.
+    ///
+    /// # Returns
+    ///
+    /// A new instance of `BatchAmendOrderParameters`.
     pub fn new(symbol: String) -> Self {
         Self {
             symbol,
@@ -147,71 +157,197 @@ impl BatchAmendOrderRequestParameters {
         }
     }
 
+    /// Sets the order id for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_id` - The order id to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_order_id(mut self, order_id: String) -> Self {
         self.order_id = Some(order_id);
         self
     }
 
+    /// Sets the order link id for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_link_id` - The order link id to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_order_link_id(mut self, order_link_id: String) -> Self {
         self.order_link_id = Some(order_link_id);
         self
     }
 
+    /// Sets the order iv for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `order_iv` - The order id to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_order_iv(mut self, order_iv: f64) -> Self {
         self.order_iv = Some(order_iv);
         self
     }
 
+    /// Sets the trigger price for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `trigger_price` - The trigger price to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_trigger_price(mut self, trigger_price: String) -> Self {
         self.trigger_price = Some(trigger_price);
         self
     }
 
+    /// Sets the qty for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `qty` - The qty to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_qty(mut self, qty: f64) -> Self {
         self.qty = Some(qty);
         self
     }
 
+    /// Sets the price for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `price` - The price to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_price(mut self, price: f64) -> Self {
         self.price = Some(price);
         self
     }
 
+    /// Sets the tpsl mode for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `tpsl_mode` - The tpsl mode to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_tpsl_mode(mut self, tpsl_mode: String) -> Self {
         self.tpsl_mode = Some(tpsl_mode);
         self
     }
 
+    /// Sets the take profit for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `take_profit` - The take profit to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_take_profit(mut self, take_profit: String) -> Self {
         self.take_profit = Some(take_profit);
         self
     }
 
+    /// Sets the stop loss for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `stop_loss` - The stop loss to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_stop_loss(mut self, stop_loss: String) -> Self {
         self.stop_loss = Some(stop_loss);
         self
     }
 
+    /// Sets the tp trigger by for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `tp_trigger_by` - The tp trigger by to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_tp_trigger_by(mut self, tp_trigger_by: String) -> Self {
         self.tp_trigger_by = Some(tp_trigger_by);
         self
     }
 
+    /// Sets the sl trigger by for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `sl_trigger_by` - The sl trigger by to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_sl_trigger_by(mut self, sl_trigger_by: String) -> Self {
         self.sl_trigger_by = Some(sl_trigger_by);
         self
     }
 
+    /// Sets the trigger by for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `trigger_by` - The trigger by to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_trigger_by(mut self, trigger_by: String) -> Self {
         self.trigger_by = Some(trigger_by);
         self
     }
-
+    
+    /// Sets the tp limit price for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `tp_limit_price` - The tp limit price to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_tp_limit_price(mut self, tp_limit_price: String) -> Self {
         self.tp_limit_price = Some(tp_limit_price);
         self
     }
 
+    /// Sets the sl limit price for the batch amend order.
+    ///
+    /// # Arguments
+    ///
+    /// * `sl_limit_price` - The sl limit price to set.
+    ///
+    /// # Returns
+    ///
+    /// The modified `BatchAmendOrderParameters` instance.
     pub fn with_sl_limit_price(mut self, sl_limit_price: String) -> Self {
         self.sl_limit_price = Some(sl_limit_price);
         self
