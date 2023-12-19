@@ -20,38 +20,13 @@ use anyhow::Result;
 const PATH: &'static str = "/v5/order/create-batch";
 
 impl BybitApi {
-    pub async fn batch_place_order(&self, params: BatchPlaceOrderParameters) -> Result<BatchPlaceOrderResponse> {
-        self.post(PATH, Some(params)).await
-    }
-}
-
-#[derive(Debug, Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum BatchPlaceOrderCategory {
-    Linear,
-    Option,
-}
-
-#[derive(Debug, Clone, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BatchPlaceOrderParameters {
-    category: BatchPlaceOrderCategory,
-    request: Vec<BatchPlaceOrderRequestParameters>,
-}
-
-impl BatchPlaceOrderParameters {
-    /// Creates a new instance of `BatchPlaceOrderParameters`.
+    /// batch place orders.
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the order.
-    /// * `request` - The request of the order.
+    /// * `params` - The parameters for batch place orders.
     ///
-    /// # Returns
-    ///
-    /// A new instance of `BatchPlaceOrderParameters`.
-    /// 
-    /// # Example
+    /// # Examples
     /// 
     /// ```rust
     /// use rsbit::v5::api::{
@@ -88,6 +63,36 @@ impl BatchPlaceOrderParameters {
     ///     }
     /// }
     /// ```
+    pub async fn batch_place_order(&self, params: BatchPlaceOrderParameters) -> Result<BatchPlaceOrderResponse> {
+        self.post(PATH, Some(params)).await
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum BatchPlaceOrderCategory {
+    Linear,
+    Option,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BatchPlaceOrderParameters {
+    category: BatchPlaceOrderCategory,
+    request: Vec<BatchPlaceOrderRequestParameters>,
+}
+
+impl BatchPlaceOrderParameters {
+    /// Creates a new instance of `BatchPlaceOrderParameters`.
+    ///
+    /// # Arguments
+    ///
+    /// * `category` - The category of the order.
+    /// * `request` - The request of the order.
+    ///
+    /// # Returns
+    ///
+    /// A new instance of `BatchPlaceOrderParameters`.
     pub fn new(category: BatchPlaceOrderCategory, request: Vec<BatchPlaceOrderRequestParameters>) -> Self {
         Self {
             category,

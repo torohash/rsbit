@@ -9,6 +9,11 @@ use rsbit::v5::api::{
             BatchPlaceOrderRequestParameters,
             BatchPlaceOrderCategory,
         },
+        batch_amend_order::{
+            BatchAmendOrderParameters,
+            BatchAmendOrderRequestParameters,
+            BatchAmendOrderCategory,
+        },
         cancel_all_order::{
             CancelAllOrderParameters,
             CancelAllOrderCategory,
@@ -52,9 +57,34 @@ async fn test_batch_order_success() {
             let ret_code = result.ret_code();
             assert_eq!(ret_code, 0, "Failed to batch place order: {}", result.ret_msg());
 
+            let params = BatchAmendOrderParameters::new(
+                BatchAmendOrderCategory::Linear,
+                vec![
+                    BatchAmendOrderRequestParameters::new(target_symbol.clone()).with_order_id(result.result().list()[0].order_id().to_string()).with_qty(0.02),
+                    BatchAmendOrderRequestParameters::new(target_symbol.clone()).with_order_id(result.result().list()[1].order_id().to_string()).with_qty(0.02),
+                    BatchAmendOrderRequestParameters::new(target_symbol.clone()).with_order_id(result.result().list()[2].order_id().to_string()).with_qty(0.02),
+                ],
+            );
+            
+            // batch amend order
+            let result = api.batch_amend_order(params).await;
+            match result {
+                Ok(result) => {
+                    let ret_code = result.ret_code();
+                    assert_eq!(ret_code, 0, "Failed to batch amend order: {}", result.ret_msg());
+                    let result = result.result();
+                    let list = result.list();
+                    assert_eq!(list.len(), 3);
+                },
+                Err(err) => {
+                    assert!(false, "Failed to batch amend order: {:?}", err);
+                }
+            }
+
+            // cancel all order
             let params = CancelAllOrderParameters::new(
                 CancelAllOrderCategory::Linear,
-            ).with_symbol(target_symbol);
+            ).with_symbol(target_symbol);      
             let result = api.cancel_all_order(params).await;
             match result {
                 Ok(result) => {
