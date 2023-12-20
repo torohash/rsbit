@@ -88,7 +88,7 @@ impl GetOpenOrdersParameters {
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the risk limit.
+    /// * `category` - The category of the open orders.
     ///
     /// # Returns
     ///

@@ -16,3 +16,4 @@ mod get_delivery_price_test;
 mod get_long_short_ratio_test;
 mod get_open_order_test;
 mod get_order_history_test;
+mod get_borrow_quota_test;
