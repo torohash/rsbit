@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_mark_price_kline::{
+use rsbit::v5::api::get::market::get_mark_price_kline::{
     GetMarkPriceKlineParameters,
     GetMarkPriceKlineCategory,
 };

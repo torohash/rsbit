@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_kline::{
+use rsbit::v5::api::get::market::get_kline::{
     GetKlineParameters,
     GetKlineCategory,
 };
@@ -8,17 +8,17 @@ use crate::common::setup_api_public;
 async fn test_get_kline_success() {
     let api = setup_api_public();
     let categories = vec![
-        (GetKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string()),
-        (GetKlineCategory::Inverse, "BTCUSD".to_string(), "360".to_string()),
-        (GetKlineCategory::Spot, "BTCUSDT".to_string(), "D".to_string()),
+        (GetKlineCategory::Linear, "BTCUSDT".to_string(), "1".to_string(), 100),
+        (GetKlineCategory::Inverse, "BTCUSD".to_string(), "360".to_string(), 100),
+        (GetKlineCategory::Spot, "BTCUSDT".to_string(), "D".to_string(), 100),
     ];
 
-    for (category, symbol, interval) in categories.into_iter() {
+    for (category, symbol, interval, limit) in categories.into_iter() {
         let params = GetKlineParameters::new(
             category,
             symbol.clone(),
             interval.clone(),
-        );
+        ).with_limit(limit);
     
         let result = api.get_kline(params).await;
         match result {

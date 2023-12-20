@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_instruments_info::{
+use rsbit::v5::api::get::market::get_instruments_info::{
     GetInstrumentsInfoParameters,
     InstrumentsInfoResult,
     GetInstrumentsInfoCategory,

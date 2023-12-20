@@ -1,4 +1,4 @@
-use rsbit::api::v5::get::market::get_orderbook::{
+use rsbit::v5::api::get::market::get_orderbook::{
     GetOrderbookParameters,
     GetOrderbookCategory,
 };
