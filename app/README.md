@@ -1,4 +1,3 @@
-
 ## Details
 This is a library for the Bybit API.
 
@@ -43,47 +42,3 @@ async fn main() {
 
 ### Reference
 - [Introduction | Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/intro)
-
-## develop
-
-Create a `.env` file and write the following:
-```
-# .env
-USER_NAME=your_user_name
-```
-
-Then, start the docker container:
-```
-docker compose build
-docker compose up -d
-docker compose exec app bash
-```
-
-If you want to run test code, create a `.env` file in the root directory of the Rust project and write as follows:
-```
-# .env
-TESTNET_API_KEY=your_api_key
-TESTNET_API_SECRET=your_api_secret
-```
-
-After that, execute the following command:
-It is recommended that the thread specify 1. because the request frequency will be too high.
-```
-cargo test --all-targets -- --test-threads=1
-cargo test --doc
-```
-
-#### License
-
-<sup>
-Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
-</sup>
-
-<br>
-
-<sub>
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in Serde by you, as defined in the Apache-2.0 license, shall be
-dual licensed as above, without any additional terms or conditions.
-</sub>
