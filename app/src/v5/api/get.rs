@@ -1,5 +1,6 @@
 pub mod market;
 pub mod trade;
+pub mod position;
 use crate::v5::api::{
     request::{
         BybitApiRequest,
