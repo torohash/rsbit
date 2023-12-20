@@ -28,7 +28,7 @@ async fn main() {
         GetPublicRecentTradingHistoryCategory::Linear,
     ).with_symbol("BTCUSDT".to_string());
 
-    let result = bybit_api.get_public_recent_trading_history.unwrap();
+    let result = bybit_api.get_public_recent_trading_history;
 
     match result {
         Ok(result) => {
