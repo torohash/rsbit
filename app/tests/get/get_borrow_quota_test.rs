@@ -24,7 +24,6 @@ async fn test_get_borrow_quota_success() {
                 let ret_code = result.ret_code();
                 assert_eq!(ret_code, 0, "Failed to get borrow quota: {}", result.ret_msg());
                 assert_eq!(result.result().symbol(), &symbol);
-                println!("result: {:?}", result.result());
             },
             Err(err) => {
                 assert!(false, "Failed to get borrow quota: {:?}", err);

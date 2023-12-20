@@ -64,6 +64,7 @@ impl BybitApi {
     ///         Err(err) => {}
     ///     }
     /// }
+    /// ```
     pub async fn cancel_all_order(&self, params: CancelAllOrderParameters) -> Result<CancelAllOrderResponse> {
         self.post(PATH, Some(params)).await
     }
