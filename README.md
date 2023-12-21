@@ -1,3 +1,4 @@
+[![Crates.io](https://img.shields.io/crates/v/rsbit.svg)](https://crates.io/crates/rsbit)
 
 ## Details
 This is a library for the Bybit API.
