@@ -10,7 +10,7 @@ async fn test_switch_cross_isolated_margin_success() {
     let params = SwitchCrossIsolatedMarginParameters::new(
         SwitchCrossIsolatedMarginCategory::Inverse,
         "BTCUSD".to_string(),
-        0,
+        1,
         10.0,
         10.0,
     );
@@ -28,7 +28,7 @@ async fn test_switch_cross_isolated_margin_success() {
     let params = SwitchCrossIsolatedMarginParameters::new(
         SwitchCrossIsolatedMarginCategory::Inverse,
         "BTCUSD".to_string(),
-        1,
+        0,
         10.0,
         10.0,
     );

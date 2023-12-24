@@ -74,10 +74,9 @@ impl SetAutoAddMarginParameters {
     ///
     /// # Arguments
     ///
-    /// * `category` - The category of the leverage.
-    /// * `symbol` - The symbol of the leverage.
-    /// * `auto_add_margin` - The auto_add_margin of the leverage.
-    /// * `position_idx` - The position_idx of the leverage.
+    /// * `category` - The category.
+    /// * `symbol` - The symbol.
+    /// * `auto_add_margin` - The auto_add_margin.
     ///
     /// # Returns
     ///

@@ -8,3 +8,4 @@ mod switch_position_mode_test;
 mod set_risk_limit_test;
 mod set_trading_stop_test;
 mod set_auto_add_margin_test;
+mod add_or_reduce_margin_test;
