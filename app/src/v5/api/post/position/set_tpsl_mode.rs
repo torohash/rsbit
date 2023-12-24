@@ -1,11 +1,7 @@
-use crate::{
-    v5::api::{
-        BybitApi,
-        post::Post,
-    },
-    utils::serialize_as_string,
+use crate::v5::api::{
+    BybitApi,
+    post::Post,
 };
-
 use serde::{
     Serialize,
     Deserialize,
@@ -13,36 +9,34 @@ use serde::{
 use serde_json::Value;
 use anyhow::Result;
 
-const PATH: &'static str = "/v5/position/switch-isolated";
+const PATH: &'static str = "/v5/position/set-tpsl-mode";
 
 impl BybitApi {
-    /// switch cross isolated margin.
+    /// set tpsl mode.
     ///
     /// # Arguments
     ///
-    /// * `params` - The parameters for switch cross isolated margin.
+    /// * `params` - The parameters for set tpsl mode.
     ///
     /// # Examples
     ///
     /// ```rust
     /// use rsbit::v5::api::{
-    ///     post::position::switch_cross_isolated_margin::{
-    ///         SwitchCrossIsolatedMarginParameters,
-    ///         SwitchCrossIsolatedMarginCategory
+    ///     post::position::set_tpsl_mode::{
+    ///         SetTpslModeParameters,
+    ///         SetTpslModeCategory
     ///     },
     ///     BybitApi,
     /// };
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = BybitApi::new();
-    ///     let params = SwitchCrossIsolatedMarginParameters::new(
-    ///         SwitchCrossIsolatedMarginCategory::Linear,
+    ///     let params = SetTpslModeParameters::new(
+    ///         SetTpslModeCategory::Linear,
     ///         "BTCUSDT".to_string(),
-    ///         0,
-    ///         10.0,
-    ///         10.0,
+    ///         "Full".to_string(),
     ///     );
-    ///     let response = api.switch_cross_isolated_margin(params).await;
+    ///     let response = api.set_tpsl_mode(params).await;
     ///     match response {
     ///         Ok(info) => {
     ///             // Handle the data
@@ -53,66 +47,57 @@ impl BybitApi {
     ///     }
     /// }
     /// ```
-    pub async fn switch_cross_isolated_margin(&self, params: SwitchCrossIsolatedMarginParameters) -> Result<SwitchCrossIsolatedMarginResponse> {
+    pub async fn set_tpsl_mode(&self, params: SetTpslModeParameters) -> Result<SetTpslModeResponse> {
         self.post(PATH, Some(params)).await
     }
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum SwitchCrossIsolatedMarginCategory {
+pub enum SetTpslModeCategory {
     Linear,
     Inverse,
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct SwitchCrossIsolatedMarginParameters {
-    category: SwitchCrossIsolatedMarginCategory,
+pub struct SetTpslModeParameters {
+    category: SetTpslModeCategory,
     symbol: String,
-    #[serde(serialize_with = "serialize_as_string")]
-    trade_mode: u8,
-    #[serde(serialize_with = "serialize_as_string")]
-    buy_leverage: f64,
-    #[serde(serialize_with = "serialize_as_string")]
-    sell_leverage: f64,
+    tp_sl_mode: String,  
 }
 
-impl SwitchCrossIsolatedMarginParameters {
-    /// Creates a new instance of `SwitchCrossIsolatedMarginParameters`.
+impl SetTpslModeParameters {
+    /// Creates a new instance of `SetTpslModeParameters`.
     ///
     /// # Arguments
     ///
     /// * `category` - The category.
     /// * `symbol` - The symbol.
-    /// * `trade_mode` - The trade_mode.
-    /// * `buy_leverage` - The buy_leverage.
-    /// * `sell_leverage` - The sell_leverage.
+    /// * `tp_sl_mode` - The tp_sl_mode.
     ///
     /// # Returns
     ///
-    /// A new instance of `SwitchCrossIsolatedMarginParameters`.
-    pub fn new(category: SwitchCrossIsolatedMarginCategory, symbol: String, trade_mode: u8, buy_leverage: f64, sell_leverage: f64) -> Self {
+    /// A new instance of `SetTpslModeParameters`.
+    pub fn new(category: SetTpslModeCategory, symbol: String, tp_sl_mode: String) -> Self {
         Self {
             category,
             symbol,
-            trade_mode,
-            buy_leverage,
-            sell_leverage,
+            tp_sl_mode,
         }
     }
 }
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct SwitchCrossIsolatedMarginResponse {
+pub struct SetTpslModeResponse {
     ret_code: i32,
     ret_msg: String,
-    result: Value,
+    result: SetTpslModeResult,
     ret_ext_info: Value,
     time: u64,
 }
-impl SwitchCrossIsolatedMarginResponse {
+impl SetTpslModeResponse {
     pub fn ret_code(&self) -> i32 {
         self.ret_code
     }
@@ -129,11 +114,11 @@ impl SwitchCrossIsolatedMarginResponse {
         self.ret_msg = ret_msg;
     }
 
-    pub fn result(&self) -> &Value {
+    pub fn result(&self) -> &SetTpslModeResult {
         &self.result
     }
 
-    pub fn set_result(&mut self, result: Value) {
+    pub fn set_result(&mut self, result: SetTpslModeResult) {
         self.result = result;
     }
 
@@ -151,5 +136,21 @@ impl SwitchCrossIsolatedMarginResponse {
 
     pub fn set_time(&mut self, time: u64) {
         self.time = time;
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetTpslModeResult {
+    tp_sl_mode: String,
+}
+
+impl SetTpslModeResult {
+    pub fn tp_sl_mode(&self) -> &str {
+        &self.tp_sl_mode
+    }
+
+    pub fn set_tp_sl_mode(&mut self, tp_sl_mode: String) {
+        self.tp_sl_mode = tp_sl_mode;
     }
 }

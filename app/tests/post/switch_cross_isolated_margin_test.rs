@@ -18,10 +18,10 @@ async fn test_switch_cross_isolated_margin_success() {
     match result {
         Ok(result) => {
             let ret_code = result.ret_code();
-            assert_eq!(ret_code, 0, "Failed to set Leverage: {}", result.ret_msg());
+            assert_eq!(ret_code, 0, "Failed to switch cross isolated margin: {}", result.ret_msg());
         },
         Err(err) => {
-            assert!(false, "Failed to set Leverage: {:?}", err);
+            assert!(false, "Failed to switch cross isolated margin: {:?}", err);
         }
     }
 
