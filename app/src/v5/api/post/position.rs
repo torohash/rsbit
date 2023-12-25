@@ -6,3 +6,4 @@ pub mod set_risk_limit;
 pub mod set_trading_stop;
 pub mod set_auto_add_margin;
 pub mod add_or_reduce_margin;
+pub mod confirm_new_risk_limit;
