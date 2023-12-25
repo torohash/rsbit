@@ -17,3 +17,6 @@ mod get_long_short_ratio_test;
 mod get_open_order_test;
 mod get_order_history_test;
 mod get_borrow_quota_test;
+mod get_position_info_test;
+mod get_execution_test;
+mod get_closed_pnl_test;

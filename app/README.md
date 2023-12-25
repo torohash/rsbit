@@ -1,3 +1,5 @@
+[![Crates.io](https://img.shields.io/crates/v/rsbit.svg)](https://crates.io/crates/rsbit)
+
 ## Details
 This is a library for the Bybit API.
 
@@ -27,7 +29,7 @@ async fn main() {
         GetPublicRecentTradingHistoryCategory::Linear,
     ).with_symbol("BTCUSDT".to_string());
 
-    let result = bybit_api.get_public_recent_trading_history.unwrap();
+    let result = bybit_api.get_public_recent_trading_history;
 
     match result {
         Ok(result) => {
