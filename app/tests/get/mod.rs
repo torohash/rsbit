@@ -20,3 +20,4 @@ mod get_borrow_quota_test;
 mod get_position_info_test;
 mod get_execution_test;
 mod get_closed_pnl_test;
+mod get_wallet_balance_test;
