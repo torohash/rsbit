@@ -263,8 +263,8 @@ pub struct PositionInfo {
     side: Option<String>,
     #[serde(deserialize_with = "deserialize_f64")]
     avg_price: f64,
-    #[serde(deserialize_with = "deserialize_f64")]
-    position_value: f64,
+    #[serde(deserialize_with = "deserialize_option_f64")]
+    position_value: Option<f64>,
     trade_mode: u8,
     auto_add_margin: u8,
     position_status: String,
@@ -286,8 +286,8 @@ pub struct PositionInfo {
     stop_loss: Option<f64>,
     #[serde(deserialize_with = "deserialize_f64")]
     trailing_stop: f64,
-    #[serde(deserialize_with = "deserialize_f64")]
-    unrealised_pnl: f64,
+    #[serde(deserialize_with = "deserialize_option_f64")]
+    unrealised_pnl: Option<f64>,
     #[serde(deserialize_with = "deserialize_f64")]
     cum_realised_pnl: f64,
     seq: u64,
@@ -348,12 +348,12 @@ impl PositionInfo {
         self.avg_price = avg_price;
     }
 
-    pub fn position_value(&self) -> f64 {
+    pub fn position_value(&self) -> Option<f64> {
         self.position_value
     }
 
     pub fn set_position_value(&mut self, position_value: f64) {
-        self.position_value = position_value;
+        self.position_value = Some(position_value);
     }
 
     pub fn trade_mode(&self) -> u8 {
@@ -460,12 +460,12 @@ impl PositionInfo {
         self.trailing_stop = trailing_stop;
     }
 
-    pub fn unrealised_pnl(&self) -> f64 {
+    pub fn unrealised_pnl(&self) -> Option<f64> {
         self.unrealised_pnl
     }
 
     pub fn set_unrealised_pnl(&mut self, unrealised_pnl: f64) {
-        self.unrealised_pnl = unrealised_pnl;
+        self.unrealised_pnl = Some(unrealised_pnl);
     }
 
     pub fn cum_realised_pnl(&self) -> f64 {
