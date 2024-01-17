@@ -248,38 +248,38 @@ impl WalletBalance {
 #[serde(rename_all = "camelCase")]
 pub struct Coin {
     #[serde(deserialize_with = "deserialize_option_f64")]
-    pub available_to_borrow: Option<f64>,
+    available_to_borrow: Option<f64>,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub bonus: f64,
+    bonus: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub accrued_interest: f64,
+    accrued_interest: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub available_to_withdraw: f64,
+    available_to_withdraw: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub total_order_i_m: f64,
+    total_order_i_m: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub equity: f64,
+    equity: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub total_position_m_m: f64,
+    total_position_m_m: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub usd_value: f64,
+    usd_value: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub spot_hedging_qty: f64,
+    spot_hedging_qty: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub unrealised_pnl: f64,
-    pub collateral_switch: bool,
+    unrealised_pnl: f64,
+    collateral_switch: bool,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub borrow_amount: f64,
+    borrow_amount: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub total_position_i_m: f64,
+    total_position_i_m: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub wallet_balance: f64,
+    wallet_balance: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub cum_realised_pnl: f64,
+    cum_realised_pnl: f64,
     #[serde(deserialize_with = "deserialize_f64")]
-    pub locked: f64,
-    pub margin_collateral: bool,
-    pub coin: String,
+    locked: f64,
+    margin_collateral: bool,
+    coin: String,
 }
 
 impl Coin {
