@@ -25,3 +25,4 @@ mod get_asset_info_test;
 mod get_borrow_history_test;
 mod get_collateral_info_test;
 mod get_fee_rate_test;
+mod get_transaction_log_test;
