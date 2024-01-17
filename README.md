@@ -1,5 +1,9 @@
 [![Crates.io](https://img.shields.io/crates/v/rsbit.svg)](https://crates.io/crates/rsbit)
 
+I am live coding on YouTube. If you're interested, please feel free to visit.  
+※日本語で話しています。  
+[YouTube Channel Link](https://www.youtube.com/@torohash)
+
 ## Details
 This is a library for the Bybit API.
 
