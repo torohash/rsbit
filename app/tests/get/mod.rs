@@ -23,3 +23,4 @@ mod get_closed_pnl_test;
 mod get_wallet_balance_test;
 mod get_asset_info_test;
 mod get_borrow_history_test;
+mod get_collateral_info_test;
