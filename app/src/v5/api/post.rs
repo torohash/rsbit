@@ -1,6 +1,7 @@
 pub mod trade;
 pub mod position;
 pub mod account;
+pub mod asset;
 use crate::v5::api::{
     request::{
         BybitApiRequest,
