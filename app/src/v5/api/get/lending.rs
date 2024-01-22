@@ -1,0 +1,1 @@
+pub mod get_lending_coin_info;

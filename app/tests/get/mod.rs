@@ -29,3 +29,4 @@ mod get_transaction_log_test;
 mod get_deposit_records_test;
 mod get_withdrawal_records_test;
 mod get_withdrawable_amount_test;
+mod get_lending_coin_info_test;
