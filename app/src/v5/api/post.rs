@@ -2,6 +2,7 @@ pub mod trade;
 pub mod position;
 pub mod account;
 pub mod asset;
+pub mod lending;
 use crate::v5::api::{
     request::{
         BybitApiRequest,
