@@ -31,3 +31,4 @@ mod get_withdrawal_records_test;
 mod get_withdrawable_amount_test;
 mod get_lending_coin_info_test;
 mod get_order_records_test;
+mod get_lending_account_info_test;
