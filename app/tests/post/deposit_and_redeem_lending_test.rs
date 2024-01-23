@@ -1,4 +1,7 @@
-use rsbit::v5::api::post::lending::deposit_funds::DepositFundsParameters;
+use rsbit::v5::api::post::lending::{
+    deposit_funds::DepositFundsParameters,
+    redeem_funds::RedeemFundsParameters,
+};
 use crate::common::setup_api_private;
 
 #[tokio::test]
@@ -16,6 +19,22 @@ async fn test_deposit_funds_success() {
         },
         Err(err) => {
             assert!(false, "Failed to deposit funds: {:?}", err);
+        }
+    }
+
+    let params = RedeemFundsParameters::new(
+        "USDT".to_string(),
+        10.0,
+    );
+
+    let result = api.redeem_funds(params).await;
+    match result {
+        Ok(result) => {
+            let ret_code = result.ret_code();
+            assert_eq!(ret_code, 0, "Failed to redeem funds: {}", result.ret_msg());
+        },
+        Err(err) => {
+            assert!(false, "Failed to redeem funds: {:?}", err);
         }
     }
 
