@@ -19,3 +19,5 @@ pub const CATEGORY_LINEAR: &'static str = "linear";
 pub const CATEGORY_SPOT: &'static str = "spot";
 pub const CATEGORY_INVERSE: &'static str = "inverse";
 pub const CATEGORY_OPTION: &'static str = "option";
+
+pub const PUBLIC_TRADE_TOPIC: &'static str = "publicTrade";
