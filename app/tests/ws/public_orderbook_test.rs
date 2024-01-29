@@ -3,16 +3,17 @@ use rsbit::{
         Channel,
         DeserializedMessage,
     },
-    constants::PUBLIC_TRADE_TOPIC,
+    constants::PUBLIC_ORDERBOOK_TOPIC,
 };
 use crate::common::setup_ws;
 use futures_util::stream::StreamExt;
 
 #[tokio::test]
-async fn test_public_trade_success() {
+async fn test_public_orderbook_success() {
     let mut ws = setup_ws(Channel::TestnetLinearPublicChannel);
     let symbol = "BTCUSDT";
-    ws.add_trade_args(symbol);
+    let depth = "50";
+    ws.add_orderbook_args(depth, symbol);
     let result = ws.execute().await;
 
     let (_write, mut read) = if let Ok(result) = result {
@@ -31,8 +32,8 @@ async fn test_public_trade_success() {
                             DeserializedMessage::SubscribePublicSuccess(response) => {
                                 assert!(response.success);
                             },
-                            DeserializedMessage::PublicTrade(response) => {
-                                assert_eq!(response.topic(), format!("{}.{}", PUBLIC_TRADE_TOPIC, symbol));
+                            DeserializedMessage::PublicOrderbook(response) => {
+                                assert_eq!(response.topic(), format!("{}.{}.{}", PUBLIC_ORDERBOOK_TOPIC, depth, symbol));
                                 break
                             },
                             _ => {

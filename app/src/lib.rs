@@ -1,5 +1,5 @@
 pub mod v5;
 pub mod error;
-mod constants;
+pub mod constants;
 mod auth;
 mod utils;

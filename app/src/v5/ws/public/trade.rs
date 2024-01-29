@@ -7,7 +7,7 @@ use serde::Deserialize;
 
 impl BybitWS {
     pub fn add_trade_args(&mut self, symbol: &str) {
-        self.args.push(format!("{}.{}", PUBLIC_TRADE_TOPIC, symbol.to_string()));
+        self.args.push(format!("{}.{}", PUBLIC_TRADE_TOPIC, symbol));
     }
 }
 

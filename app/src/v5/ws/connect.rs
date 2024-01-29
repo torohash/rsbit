@@ -22,6 +22,7 @@ use futures_util::{
 use serde_json::json;
 
 impl BybitWS {
+    // websocket connect
     pub async fn connect(&self, is_private: bool) -> Result<(
         SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, Message>,
         SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>

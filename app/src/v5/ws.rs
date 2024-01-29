@@ -15,8 +15,12 @@ use crate::{
         MAINNET_PRIVATE_CHANNEL,
         TESTNET_PRIVATE_CHANNEL,
         PUBLIC_TRADE_TOPIC,
+        PUBLIC_ORDERBOOK_TOPIC,
     },
-    v5::ws::public::trade::PublicTradeResponse,
+    v5::ws::public::{
+        trade::PublicTradeResponse,
+        orderbook::PublicOrderbookResponse,
+    },
 };
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -54,6 +58,7 @@ pub enum Channel {
 pub enum DeserializedMessage {
     SubscribePublicSuccess(SubscribePublicSuccessResponse),
     PublicTrade(PublicTradeResponse),
+    PublicOrderbook(PublicOrderbookResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -151,6 +156,7 @@ impl BybitWS {
         self
     }
 
+    // argsに追加したtopicをsubscribeする。
     pub async fn execute(&self) -> Result<(
         SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, Message>,
         SplitStream<WebSocketStream<MaybeTlsStream<TcpStream>>>
@@ -165,6 +171,7 @@ impl BybitWS {
         Ok((write, read))
     }
 
+    // subscribeしたtopicからのメッセージを適切な構造体にデシリアライズする。
     pub async fn deserialize_message(&self, message: Message) -> Result<DeserializedMessage> {
         let message = match message {
             Message::Text(message) => message,
@@ -186,12 +193,14 @@ impl BybitWS {
                     let response: PublicTradeResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PublicTrade(response))
                 },
+                Some(topic) if topic.contains(PUBLIC_ORDERBOOK_TOPIC) => {
+                    let response: PublicOrderbookResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PublicOrderbook(response))
+                },
                 Some(_) | None => {
-                    println!("conn_idがなく、topicも特定のパターンに一致しない");
-                    Err(anyhow::anyhow!("Message is not text"))
+                    Err(anyhow::anyhow!("Unknown message"))
                 }
             }
         }
     }
-
 }
