@@ -22,3 +22,4 @@ pub const CATEGORY_OPTION: &'static str = "option";
 
 pub const PUBLIC_TRADE_TOPIC: &'static str = "publicTrade";
 pub const PUBLIC_ORDERBOOK_TOPIC: &'static str = "orderbook";
+pub const PUBLIC_TICKERS_TOPIC: &'static str = "tickers";

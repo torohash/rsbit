@@ -16,10 +16,17 @@ use crate::{
         TESTNET_PRIVATE_CHANNEL,
         PUBLIC_TRADE_TOPIC,
         PUBLIC_ORDERBOOK_TOPIC,
+        PUBLIC_TICKERS_TOPIC,
     },
     v5::ws::public::{
         trade::PublicTradeResponse,
         orderbook::PublicOrderbookResponse,
+        tickers::{
+            linear::PublicLinearTickersResponse,
+            spot::PublicSpotTickersResponse,
+            inverse::PublicInverseTickersResponse,
+            option::PublicOptionTickersResponse,
+        }
     },
 };
 use serde::Deserialize;
@@ -59,15 +66,19 @@ pub enum DeserializedMessage {
     SubscribePublicSuccess(SubscribePublicSuccessResponse),
     PublicTrade(PublicTradeResponse),
     PublicOrderbook(PublicOrderbookResponse),
+    PublicLinearTickers(PublicLinearTickersResponse),
+    PublicSpotTickers(PublicSpotTickersResponse),
+    PublicInverseTickers(PublicInverseTickersResponse),
+    PublicOptionTickers(PublicOptionTickersResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SubscribePublicSuccessResponse {
     pub success: bool,
-    pub ret_msg: String,
+    pub ret_msg: Option<String>,
     pub conn_id: String,
-    pub req_id: String,
-    pub op: String
+    pub req_id: Option<String>,
+    pub op: Option<String>
 }
 
 
@@ -101,6 +112,30 @@ impl Channel {
             Channel::TestnetPrivateChannel => true,
         }
     }
+
+    pub fn channel_category(&self) -> ChannelCategory {
+        match self {
+            Channel::MainnetSpotPublicChannel => ChannelCategory::Spot,
+            Channel::MainnetLinearPublicChannel => ChannelCategory::Linear,
+            Channel::MainnetInversePublicChannel => ChannelCategory::Inverse,
+            Channel::MainnetOptionPublicChannel => ChannelCategory::Option,
+            Channel::TestnetSpotPublicChannel => ChannelCategory::Spot,
+            Channel::TestnetLinearPublicChannel => ChannelCategory::Linear,
+            Channel::TestnetInversePublicChannel => ChannelCategory::Inverse,
+            Channel::TestnetOptionPublicChannel => ChannelCategory::Option,
+            Channel::MainnetPrivateChannel => ChannelCategory::Private,
+            Channel::TestnetPrivateChannel => ChannelCategory::Private,
+        }
+    }
+
+}
+
+pub enum ChannelCategory {
+    Linear,
+    Inverse,
+    Spot,
+    Option,
+    Private,
 }
 
 pub struct BybitWS {
@@ -196,6 +231,29 @@ impl BybitWS {
                 Some(topic) if topic.contains(PUBLIC_ORDERBOOK_TOPIC) => {
                     let response: PublicOrderbookResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PublicOrderbook(response))
+                },
+                Some(topic) if topic.contains(PUBLIC_TICKERS_TOPIC) => {
+                    match self.channel.channel_category() {
+                        ChannelCategory::Linear => {
+                            let response: PublicLinearTickersResponse = serde_json::from_str(&message)?;
+                            Ok(DeserializedMessage::PublicLinearTickers(response))
+                        },
+                        ChannelCategory::Spot => {
+                            let response: PublicSpotTickersResponse = serde_json::from_str(&message)?;
+                            Ok(DeserializedMessage::PublicSpotTickers(response))
+                        },
+                        ChannelCategory::Inverse => {
+                            let response: PublicInverseTickersResponse = serde_json::from_str(&message)?;
+                            Ok(DeserializedMessage::PublicInverseTickers(response))
+                        },
+                        ChannelCategory::Option => {
+                            let response: PublicOptionTickersResponse = serde_json::from_str(&message)?;
+                            Ok(DeserializedMessage::PublicOptionTickers(response))
+                        },
+                        ChannelCategory::Private => {
+                            Err(anyhow::anyhow!("Private category is not supported for tickers"))
+                        }
+                    }
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
