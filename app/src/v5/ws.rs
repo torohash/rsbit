@@ -17,6 +17,7 @@ use crate::{
         PUBLIC_TRADE_TOPIC,
         PUBLIC_ORDERBOOK_TOPIC,
         PUBLIC_TICKERS_TOPIC,
+        PUBLIC_KLINE_TOPIC,
     },
     v5::ws::public::{
         trade::PublicTradeResponse,
@@ -26,7 +27,8 @@ use crate::{
             spot::PublicSpotTickersResponse,
             inverse::PublicInverseTickersResponse,
             option::PublicOptionTickersResponse,
-        }
+        },
+        kline::PublicKlineResponse,
     },
 };
 use serde::Deserialize;
@@ -70,6 +72,7 @@ pub enum DeserializedMessage {
     PublicSpotTickers(PublicSpotTickersResponse),
     PublicInverseTickers(PublicInverseTickersResponse),
     PublicOptionTickers(PublicOptionTickersResponse),
+    PublicKline(PublicKlineResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -254,6 +257,10 @@ impl BybitWS {
                             Err(anyhow::anyhow!("Private category is not supported for tickers"))
                         }
                     }
+                },
+                Some(topic) if topic.contains(PUBLIC_KLINE_TOPIC) => {
+                    let response: PublicKlineResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PublicKline(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
