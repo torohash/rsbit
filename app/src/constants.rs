@@ -24,3 +24,4 @@ pub const PUBLIC_TRADE_TOPIC: &'static str = "publicTrade";
 pub const PUBLIC_ORDERBOOK_TOPIC: &'static str = "orderbook";
 pub const PUBLIC_TICKERS_TOPIC: &'static str = "tickers";
 pub const PUBLIC_KLINE_TOPIC: &'static str = "kline";
+pub const PUBLIC_LIQUIDATION_TOPIC: &'static str = "liquidation";

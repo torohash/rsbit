@@ -18,6 +18,7 @@ use crate::{
         PUBLIC_ORDERBOOK_TOPIC,
         PUBLIC_TICKERS_TOPIC,
         PUBLIC_KLINE_TOPIC,
+        PUBLIC_LIQUIDATION_TOPIC,
     },
     v5::ws::public::{
         trade::PublicTradeResponse,
@@ -29,6 +30,7 @@ use crate::{
             option::PublicOptionTickersResponse,
         },
         kline::PublicKlineResponse,
+        liquidation::PublicLiquidationResponse,
     },
 };
 use serde::Deserialize;
@@ -73,6 +75,7 @@ pub enum DeserializedMessage {
     PublicInverseTickers(PublicInverseTickersResponse),
     PublicOptionTickers(PublicOptionTickersResponse),
     PublicKline(PublicKlineResponse),
+    PublicLiquidation(PublicLiquidationResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -217,6 +220,8 @@ impl BybitWS {
         };
         let value: Value = serde_json::from_str(&message)?;
 
+        println!("message: {:?}", message);
+
         match value.get("conn_id").and_then(Value::as_str) {
             Some(_conn_id) => {
                 let response: SubscribePublicSuccessResponse = serde_json::from_str(&message)?;
@@ -261,6 +266,10 @@ impl BybitWS {
                 Some(topic) if topic.contains(PUBLIC_KLINE_TOPIC) => {
                     let response: PublicKlineResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PublicKline(response))
+                },
+                Some(topic) if topic.contains(PUBLIC_LIQUIDATION_TOPIC) => {
+                    let response: PublicLiquidationResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PublicLiquidation(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
