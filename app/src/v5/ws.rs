@@ -236,8 +236,6 @@ impl BybitWS {
         };
         let value: Value = serde_json::from_str(&message)?;
 
-        println!("message: {:?}", message);
-
         match value.get("conn_id").and_then(Value::as_str) {
             Some(_conn_id) => {
                 let response: SubscribePublicSuccessResponse = serde_json::from_str(&message)?;
