@@ -41,9 +41,10 @@ impl Auth for BybitWS {
             None => Err(NotFoundApiSecret)
         }
     }
-    fn create_signature(&self, message: &str) -> Result<String> {
+    fn create_signature(&self, expires: &str) -> Result<String> {
         let api_secret = self.require_api_secret()?;
         let key = hmac::Key::new(hmac::HMAC_SHA256, api_secret.as_bytes());
+        let message = format!("GET/realtime{}", expires);
         let signature = hmac::sign(&key, message.as_bytes());
         Ok(hex::encode(signature.as_ref()))
     }

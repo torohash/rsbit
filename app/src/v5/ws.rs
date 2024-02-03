@@ -19,18 +19,22 @@ use crate::{
         PUBLIC_TICKERS_TOPIC,
         PUBLIC_KLINE_TOPIC,
         PUBLIC_LIQUIDATION_TOPIC,
+        PRIVATE_POSITION_TOPIC,
     },
-    v5::ws::public::{
-        trade::PublicTradeResponse,
-        orderbook::PublicOrderbookResponse,
-        tickers::{
-            linear::PublicLinearTickersResponse,
-            spot::PublicSpotTickersResponse,
-            inverse::PublicInverseTickersResponse,
-            option::PublicOptionTickersResponse,
+    v5::ws::{
+        public::{
+            trade::PublicTradeResponse,
+            orderbook::PublicOrderbookResponse,
+            tickers::{
+                linear::PublicLinearTickersResponse,
+                spot::PublicSpotTickersResponse,
+                inverse::PublicInverseTickersResponse,
+                option::PublicOptionTickersResponse,
+            },
+            kline::PublicKlineResponse,
+            liquidation::PublicLiquidationResponse,
         },
-        kline::PublicKlineResponse,
-        liquidation::PublicLiquidationResponse,
+        private::position::PrivatePositionResponse,
     },
 };
 use serde::Deserialize;
@@ -76,6 +80,7 @@ pub enum DeserializedMessage {
     PublicOptionTickers(PublicOptionTickersResponse),
     PublicKline(PublicKlineResponse),
     PublicLiquidation(PublicLiquidationResponse),
+    PrivatePosition(PrivatePositionResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -270,6 +275,10 @@ impl BybitWS {
                 Some(topic) if topic.contains(PUBLIC_LIQUIDATION_TOPIC) => {
                     let response: PublicLiquidationResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PublicLiquidation(response))
+                },
+                Some(topic) if topic.contains(PRIVATE_POSITION_TOPIC) => {
+                    let response: PrivatePositionResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PrivatePosition(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
