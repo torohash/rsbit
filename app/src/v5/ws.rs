@@ -20,6 +20,7 @@ use crate::{
         PUBLIC_KLINE_TOPIC,
         PUBLIC_LIQUIDATION_TOPIC,
         PRIVATE_POSITION_TOPIC,
+        PRIVATE_EXECUTION_TOPIC,
     },
     v5::ws::{
         public::{
@@ -34,7 +35,10 @@ use crate::{
             kline::PublicKlineResponse,
             liquidation::PublicLiquidationResponse,
         },
-        private::position::PrivatePositionResponse,
+        private::{
+            position::PrivatePositionResponse,
+            execution::PrivateExecutionResponse,
+        },
     },
 };
 use serde::Deserialize;
@@ -81,6 +85,7 @@ pub enum DeserializedMessage {
     PublicKline(PublicKlineResponse),
     PublicLiquidation(PublicLiquidationResponse),
     PrivatePosition(PrivatePositionResponse),
+    PrivateExecution(PrivateExecutionResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -279,6 +284,10 @@ impl BybitWS {
                 Some(topic) if topic.contains(PRIVATE_POSITION_TOPIC) => {
                     let response: PrivatePositionResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PrivatePosition(response))
+                },
+                Some(topic) if topic.contains(PRIVATE_EXECUTION_TOPIC) => {
+                    let response: PrivateExecutionResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PrivateExecution(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
