@@ -1,6 +1,6 @@
 [package]
 name = "rsbit"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 repository = "https://github.com/torohash/rsbit"
 keywords = ["bybit", "api", "wrapper"]
