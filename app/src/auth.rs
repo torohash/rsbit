@@ -4,6 +4,7 @@ use crate::{
         NotFoundApiSecret,
     },
     v5::api::BybitApi,
+    v5::ws::BybitWS,
 };
 
 use ring::hmac::{
@@ -28,6 +29,22 @@ impl Auth for BybitApi {
     fn create_signature(&self, message: &str) -> Result<String> {
         let api_secret = self.require_api_secret()?;
         let key = Key::new(HMAC_SHA256, api_secret.as_bytes());
+        let signature = hmac::sign(&key, message.as_bytes());
+        Ok(hex::encode(signature.as_ref()))
+    }
+}
+
+impl Auth for BybitWS {
+    fn require_api_secret(&self) -> Result<&str, ApiKeyError> {
+        match self.api_secret() {
+            Some(api_secret) => Ok(api_secret),
+            None => Err(NotFoundApiSecret)
+        }
+    }
+    fn create_signature(&self, expires: &str) -> Result<String> {
+        let api_secret = self.require_api_secret()?;
+        let key = hmac::Key::new(hmac::HMAC_SHA256, api_secret.as_bytes());
+        let message = format!("GET/realtime{}", expires);
         let signature = hmac::sign(&key, message.as_bytes());
         Ok(hex::encode(signature.as_ref()))
     }

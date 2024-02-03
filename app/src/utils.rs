@@ -75,6 +75,23 @@ where
     s.parse::<u64>().map_err(serde::de::Error::custom)
 }
 
+pub fn deserialize_string_to_option_u64<'de, D>(deserializer: D) -> Result<Option<u64>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let s: Option<String> = Option::deserialize(deserializer)?;
+    match s {
+        Some(s) => {
+            if s.is_empty() {
+                Ok(None)
+            } else {
+                s.parse::<u64>().map(Some).map_err(serde::de::Error::custom)
+            }
+        }
+        None => Ok(None),
+    }
+}
+
 pub fn serialize_as_string<T, S>(value: &T, serializer: S) -> Result<S::Ok, S::Error>
 where
     T: ToString,
