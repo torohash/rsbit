@@ -22,6 +22,7 @@ use crate::{
         PRIVATE_POSITION_TOPIC,
         PRIVATE_EXECUTION_TOPIC,
         PRIVATE_ORDER_TOPIC,
+        PRIVATE_WALLET_TOPIC,
     },
     v5::ws::{
         public::{
@@ -40,6 +41,7 @@ use crate::{
             position::PrivatePositionResponse,
             execution::PrivateExecutionResponse,
             order::PrivateOrderResponse,
+            wallet::PrivateWalletResponse,
         },
     },
 };
@@ -89,6 +91,7 @@ pub enum DeserializedMessage {
     PrivatePosition(PrivatePositionResponse),
     PrivateExecution(PrivateExecutionResponse),
     PrivateOrder(PrivateOrderResponse),
+    PrivateWallet(PrivateWalletResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -295,6 +298,10 @@ impl BybitWS {
                 Some(topic) if topic.contains(PRIVATE_ORDER_TOPIC) => {
                     let response: PrivateOrderResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PrivateOrder(response))
+                },
+                Some(topic) if topic.contains(PRIVATE_WALLET_TOPIC) => {
+                    let response: PrivateWalletResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PrivateWallet(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))

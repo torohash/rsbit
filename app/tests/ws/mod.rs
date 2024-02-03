@@ -6,3 +6,4 @@ mod public_liquidation_test;
 mod private_position_test;
 mod private_execution_test;
 mod private_order_test;
+mod private_wallet_test;
