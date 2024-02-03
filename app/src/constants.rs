@@ -27,3 +27,4 @@ pub const PUBLIC_KLINE_TOPIC: &'static str = "kline";
 pub const PUBLIC_LIQUIDATION_TOPIC: &'static str = "liquidation";
 pub const PRIVATE_POSITION_TOPIC: &'static str = "position";
 pub const PRIVATE_EXECUTION_TOPIC: &'static str = "execution";
+pub const PRIVATE_ORDER_TOPIC: &'static str = "order";

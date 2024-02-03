@@ -21,6 +21,7 @@ use crate::{
         PUBLIC_LIQUIDATION_TOPIC,
         PRIVATE_POSITION_TOPIC,
         PRIVATE_EXECUTION_TOPIC,
+        PRIVATE_ORDER_TOPIC,
     },
     v5::ws::{
         public::{
@@ -38,6 +39,7 @@ use crate::{
         private::{
             position::PrivatePositionResponse,
             execution::PrivateExecutionResponse,
+            order::PrivateOrderResponse,
         },
     },
 };
@@ -86,6 +88,7 @@ pub enum DeserializedMessage {
     PublicLiquidation(PublicLiquidationResponse),
     PrivatePosition(PrivatePositionResponse),
     PrivateExecution(PrivateExecutionResponse),
+    PrivateOrder(PrivateOrderResponse),
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -288,6 +291,10 @@ impl BybitWS {
                 Some(topic) if topic.contains(PRIVATE_EXECUTION_TOPIC) => {
                     let response: PrivateExecutionResponse = serde_json::from_str(&message)?;
                     Ok(DeserializedMessage::PrivateExecution(response))
+                },
+                Some(topic) if topic.contains(PRIVATE_ORDER_TOPIC) => {
+                    let response: PrivateOrderResponse = serde_json::from_str(&message)?;
+                    Ok(DeserializedMessage::PrivateOrder(response))
                 },
                 Some(_) | None => {
                     Err(anyhow::anyhow!("Unknown message"))
