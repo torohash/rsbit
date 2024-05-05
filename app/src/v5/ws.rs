@@ -160,6 +160,7 @@ pub enum ChannelCategory {
     Private,
 }
 
+#[derive(Debug, Clone)]
 pub struct BybitWS {
     channel: Channel,
     api_key: Option<String>,
