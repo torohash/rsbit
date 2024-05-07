@@ -309,3 +309,83 @@ impl BybitWS {
         }
     }
 }
+
+// subscribeしたtopicからのメッセージを適切な構造体にデシリアライズする。
+pub async fn deserialize_message(channel: Channel, message: Message) -> Result<DeserializedMessage> {
+    let message = match message {
+        Message::Text(message) => message,
+        _ => return Err(anyhow::anyhow!("Message is not text")),
+    };
+    let value: Value = serde_json::from_str(&message)?;
+
+    match value.get("conn_id").and_then(Value::as_str) {
+        Some(_conn_id) => {
+            let response: SubscribePublicSuccessResponse = serde_json::from_str(&message)?;
+            if response.success {
+                Ok(DeserializedMessage::SubscribePublicSuccess(response))
+            } else {
+                Err(anyhow::anyhow!("Subscribe failed"))
+            }
+        },
+        None => match value.get("topic").and_then(Value::as_str) {
+            Some(topic) if topic.contains(PUBLIC_TRADE_TOPIC) => {
+                let response: PublicTradeResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PublicTrade(response))
+            },
+            Some(topic) if topic.contains(PUBLIC_ORDERBOOK_TOPIC) => {
+                let response: PublicOrderbookResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PublicOrderbook(response))
+            },
+            Some(topic) if topic.contains(PUBLIC_TICKERS_TOPIC) => {
+                match channel.channel_category() {
+                    ChannelCategory::Linear => {
+                        let response: PublicLinearTickersResponse = serde_json::from_str(&message)?;
+                        Ok(DeserializedMessage::PublicLinearTickers(response))
+                    },
+                    ChannelCategory::Spot => {
+                        let response: PublicSpotTickersResponse = serde_json::from_str(&message)?;
+                        Ok(DeserializedMessage::PublicSpotTickers(response))
+                    },
+                    ChannelCategory::Inverse => {
+                        let response: PublicInverseTickersResponse = serde_json::from_str(&message)?;
+                        Ok(DeserializedMessage::PublicInverseTickers(response))
+                    },
+                    ChannelCategory::Option => {
+                        let response: PublicOptionTickersResponse = serde_json::from_str(&message)?;
+                        Ok(DeserializedMessage::PublicOptionTickers(response))
+                    },
+                    ChannelCategory::Private => {
+                        Err(anyhow::anyhow!("Private category is not supported for tickers"))
+                    }
+                }
+            },
+            Some(topic) if topic.contains(PUBLIC_KLINE_TOPIC) => {
+                let response: PublicKlineResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PublicKline(response))
+            },
+            Some(topic) if topic.contains(PUBLIC_LIQUIDATION_TOPIC) => {
+                let response: PublicLiquidationResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PublicLiquidation(response))
+            },
+            Some(topic) if topic.contains(PRIVATE_POSITION_TOPIC) => {
+                let response: PrivatePositionResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PrivatePosition(response))
+            },
+            Some(topic) if topic.contains(PRIVATE_EXECUTION_TOPIC) => {
+                let response: PrivateExecutionResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PrivateExecution(response))
+            },
+            Some(topic) if topic.contains(PRIVATE_ORDER_TOPIC) => {
+                let response: PrivateOrderResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PrivateOrder(response))
+            },
+            Some(topic) if topic.contains(PRIVATE_WALLET_TOPIC) => {
+                let response: PrivateWalletResponse = serde_json::from_str(&message)?;
+                Ok(DeserializedMessage::PrivateWallet(response))
+            },
+            Some(_) | None => {
+                Err(anyhow::anyhow!("Unknown message"))
+            }
+        }
+    }
+}
