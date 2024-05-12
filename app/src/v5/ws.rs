@@ -311,7 +311,7 @@ impl BybitWS {
 }
 
 // subscribeしたtopicからのメッセージを適切な構造体にデシリアライズする。
-pub async fn deserialize_message(channel: Channel, message: &str) -> Result<DeserializedMessage> {
+pub fn deserialize_message(channel: Channel, message: &str) -> Result<DeserializedMessage> {
 
     if message.contains("conn_id") {
         let response: SubscribePublicSuccessResponse = serde_json::from_str(&message)?;
